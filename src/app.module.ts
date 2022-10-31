@@ -9,6 +9,7 @@ import { UserService } from './user/user.service';
 import { BookingService } from './booking/booking.service';
 import { HotelService } from './hotel/hotel.service';
 import { DatabaseModule } from './database/database.module';
+import { HelpersModule } from './helpers/helpers.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { DatabaseModule } from './database/database.module';
     BookingModule,
     HotelModule,
     DatabaseModule,
+    HelpersModule,
   ],
   providers: [AuthService, UserService, BookingService, HotelService],
 })
