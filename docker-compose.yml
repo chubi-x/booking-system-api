@@ -10,5 +10,15 @@ services:
       POSTGRES_DB: booking_system
     networks:
       - hotelbooking
+  test-db:
+    image: postgres:13
+    ports:
+      - 5400:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: booking_system_test
+    networks:
+      - hotelbooking
 networks:
   hotelbooking:
