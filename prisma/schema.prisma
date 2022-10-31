@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// USER MODELS
+
+model User {
+  id             String    @id @default(uuid())
+  profilePicture String?
+  createdAt      DateTime  @default(now())
+  firstName      String
+  lastName       String
+  gender         String?
+  nationality    String?
+  address        String?
+  role           Role      @default(USER)
+  email          String    @unique
+  password       String
+  phoneNumber    String?
+  dateOfBirth    DateTime?
+
+  creditCard  CreditCardDetails? //ONE-TO-ONE
+  preferences Preferences? //ONE-TO-ONE
+  bookings    Booking[] //ONE-TO-MANY
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Preferences {
+  id       String  @id @default(uuid())
+  currency String?
+  language String?
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model CreditCardDetails {
+  id         String   @id @default(uuid())
+  number     Int
+  cvv        Int
+  expiryDate DateTime
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Hotel {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  name      String
+  address   String
+  phone     Int
+  email     String   @unique
+  rating    Int
+
+  rooms    Room[] //ONE-TO-MANY between Hotel and Room
+  bookings Booking[] //ONE-TO-MANY between Hotel and Booking
+}
+
+model Room {
+  id              String @id() @default(uuid())
+  kind            String
+  price           Int
+  numberAvailable Int
+  hotelId         String
+
+  hotel Hotel @relation(fields: [hotelId], references: [id])
+}
+
+model Booking {
+  id            String   @id @default(uuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  checkInDate   DateTime
+  checkOutDate  DateTime
+  numberOfRooms Int
+  cost          Int
+
+  userId  String @unique
+  hotelId String @unique
+  user    User   @relation(fields: [userId], references: [id])
+  hotel   Hotel  @relation(fields: [hotelId], references: [id])
+}
