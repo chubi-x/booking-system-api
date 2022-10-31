@@ -13,23 +13,23 @@ datasource db {
 // USER MODELS
 
 model User {
-  id             String    @id @default(uuid())
+  id             String             @id @default(uuid())
   profilePicture String?
-  createdAt      DateTime  @default(now())
+  createdAt      DateTime           @default(now())
   firstName      String
   lastName       String
   gender         String?
   nationality    String?
   address        String?
-  role           Role      @default(USER)
-  email          String    @unique
+  role           Role               @default(USER)
+  email          String             @unique
   password       String
   phoneNumber    String?
   dateOfBirth    DateTime?
-
-  creditCard  CreditCardDetails? //ONE-TO-ONE
-  preferences Preferences? //ONE-TO-ONE
-  bookings    Booking[] //ONE-TO-MANY
+  verified       Boolean            @default(false)
+  creditCard     CreditCardDetails? //ONE-TO-ONE
+  preferences    Preferences? //ONE-TO-ONE
+  bookings       Booking[] //ONE-TO-MANY
 }
 
 enum Role {
