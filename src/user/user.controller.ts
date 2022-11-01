@@ -40,7 +40,7 @@ export class UserController {
     return await this.userService.updateUserPreferences(userId, dto, res);
   }
 
-  @Put('/update/creditCardDetails')
+  @Put('/update/credit-card-details')
   async updateCreditCard(
     @GetUser() userId: string,
     @Body() dto: UpdateCreditCardDto,
