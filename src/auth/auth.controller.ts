@@ -11,7 +11,7 @@ import { Request, Response } from 'express';
 import { GetUser } from '../decorators';
 import { AuthGuard } from '../guards';
 import { AuthService } from './auth.service';
-import { LoginDto, SignupDto } from './dto';
+import { LoginDto, SignupDto, UpdateEmailDto } from './dto';
 
 @Controller('auth')
 export class AuthController {
@@ -35,6 +35,15 @@ export class AuthController {
     return await this.authService.verifyAccount(userId, res);
   }
 
+  @UseGuards(AuthGuard)
+  @Patch('/update-email')
+  async updateEmail(
+    @Body() dto: UpdateEmailDto,
+    @GetUser() userId: string,
+    @Res() res: Response,
+  ) {
+    return await this.authService.updateEmail(dto, userId, res);
+  }
   // change email (PATCH)
   // reset password (PATCH)
 }

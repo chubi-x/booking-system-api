@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { PrismaService } from '../database/database.service';
 import { HelpersService } from '../helpers/helpers.service';
-import { LoginDto, SignupDto } from './dto';
+import { LoginDto, SignupDto, UpdateEmailDto } from './dto';
 @Injectable()
 export class AuthService {
   constructor(
@@ -96,6 +96,22 @@ export class AuthService {
       });
     } catch (err) {
       this.resHandler.serverError(res, 'Error verifying account');
+    }
+  }
+
+  async updateEmail(dto: UpdateEmailDto, userId: string, res: Response) {
+    try {
+      await this.prisma.user.update({
+        where: { id: userId },
+        data: { email: dto.email },
+      });
+      return this.resHandler.requestSuccessful({
+        res,
+        message: 'Email updated successfully.',
+      });
+    } catch (err) {
+      console.log(err);
+      return this.resHandler.serverError(res, 'Error updating Email.');
     }
   }
 }
