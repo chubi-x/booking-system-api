@@ -23,7 +23,7 @@ export class UserController {
     return await this.userService.getUser(userId, res);
   }
   // update user bio
-  @Patch('/bio')
+  @Patch('/update/bio')
   async updateUserBio(
     @GetUser() userId: string,
     @Body() dto: UpdateBioDto,
@@ -31,7 +31,7 @@ export class UserController {
   ) {
     return await this.userService.updateUserBio(userId, dto, res);
   }
-  @Put('/preferences')
+  @Put('/update/preferences')
   async updatePreferences(
     @GetUser() userId: string,
     @Body() dto: UpdatePreferencesDto,
