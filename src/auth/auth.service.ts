@@ -183,4 +183,16 @@ export class AuthService {
       return this.resHandler.serverError(res, 'Error updating password');
     }
   }
+  async logout(req: Request, res: Response) {
+    try {
+      req.session.destroy(() => {
+        return this.resHandler.requestSuccessful({
+          res,
+          message: 'Logout successful',
+        });
+      });
+    } catch (err) {
+      return this.resHandler.serverError(err, 'Error logging out');
+    }
+  }
 }

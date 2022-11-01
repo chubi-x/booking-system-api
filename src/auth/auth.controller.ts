@@ -71,4 +71,10 @@ export class AuthController {
   ) {
     return await this.authService.resetPassword(dto, userId, res);
   }
+
+  @UseGuards(AuthGuard)
+  @Post('/logout')
+  async logout(@Req() req: Request, @Res() res: Response) {
+    return await this.authService.logout(req, res);
+  }
 }
