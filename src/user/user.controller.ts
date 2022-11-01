@@ -10,7 +10,7 @@ import {
 import { Response } from 'express';
 import { GetUser } from '../decorators';
 import { AuthGuard } from '../guards';
-import { UpdateBioDto, UpdatePreferencesDto } from './dto';
+import { UpdateBioDto, UpdateCreditCardDto, UpdatePreferencesDto } from './dto';
 import { UserService } from './user.service';
 
 @UseGuards(AuthGuard)
@@ -39,7 +39,15 @@ export class UserController {
   ) {
     return await this.userService.updateUserPreferences(userId, dto, res);
   }
-  // update credit card info (PUT)
+
+  @Put('/update/creditCardDetails')
+  async updateCreditCard(
+    @GetUser() userId: string,
+    @Body() dto: UpdateCreditCardDto,
+    @Res() res: Response,
+  ) {
+    return await this.userService.updateUserCreditCardInfo(userId, dto, res);
+  }
   // verify account (PATCH)
   // change email (PATCH)
   // reset password (PATCH)

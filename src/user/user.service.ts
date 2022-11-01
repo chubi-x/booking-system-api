@@ -69,4 +69,25 @@ export class UserService {
       );
     }
   }
+  async updateUserCreditCardInfo(
+    userId: string,
+    dto: UpdateCreditCardDto,
+    res: Response,
+  ) {
+    try {
+      await this.prisma.creditCardDetails.update({
+        where: { userId },
+        data: { ...dto },
+      });
+      return this.resHandler.requestSuccessful({
+        res,
+        message: 'Credit card details updated successfully',
+      });
+    } catch (err) {
+      return this.resHandler.serverError(
+        res,
+        'Error updating credit card info',
+      );
+    }
+  }
 }
