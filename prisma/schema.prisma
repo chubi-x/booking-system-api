@@ -25,7 +25,7 @@ model User {
   email          String             @unique
   password       String
   phoneNumber    String?
-  dateOfBirth    DateTime?
+  dateOfBirth    DateTime?          @db.Date
   verified       Boolean            @default(false)
   creditCard     CreditCardDetails? //ONE-TO-ONE
   preferences    Preferences? //ONE-TO-ONE
