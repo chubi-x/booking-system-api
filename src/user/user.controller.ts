@@ -1,8 +1,16 @@
-import { Controller, Get, Res, UseGuards, Patch, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Res,
+  UseGuards,
+  Patch,
+  Body,
+  Put,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { GetUser } from '../decorators';
 import { AuthGuard } from '../guards';
-import { UpdateBioDto } from './dto';
+import { UpdateBioDto, UpdatePreferencesDto } from './dto';
 import { UserService } from './user.service';
 
 @UseGuards(AuthGuard)
@@ -15,7 +23,7 @@ export class UserController {
     return await this.userService.getUser(userId, res);
   }
   // update user bio
-  @Patch('')
+  @Patch('/bio')
   async updateUserBio(
     @GetUser() userId: string,
     @Body() dto: UpdateBioDto,
@@ -23,7 +31,14 @@ export class UserController {
   ) {
     return await this.userService.updateUserBio(userId, dto, res);
   }
-  // update preferences (PUT)
+  @Put('/preferences')
+  async updatePreferences(
+    @GetUser() userId: string,
+    @Body() dto: UpdatePreferencesDto,
+    @Res() res: Response,
+  ) {
+    return await this.userService.updateUserPreferences(userId, dto, res);
+  }
   // update credit card info (PUT)
   // verify account (PATCH)
   // change email (PATCH)
