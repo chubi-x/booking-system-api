@@ -1,5 +1,15 @@
-import { Body, Controller, Post, Res, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Res,
+  Req,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
+import { GetUser } from '../decorators';
+import { AuthGuard } from '../guards';
 import { AuthService } from './auth.service';
 import { LoginDto, SignupDto } from './dto';
 
@@ -19,4 +29,12 @@ export class AuthController {
   ) {
     return await this.authService.login(dto, res, req);
   }
+  @UseGuards(AuthGuard)
+  @Patch('/verify-account')
+  async verifyAccount(@GetUser() userId: string, @Res() res: Response) {
+    return await this.authService.verifyAccount(userId, res);
+  }
+
+  // change email (PATCH)
+  // reset password (PATCH)
 }

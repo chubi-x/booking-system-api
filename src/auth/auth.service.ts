@@ -82,4 +82,20 @@ export class AuthService {
       return this.resHandler.serverError(res, 'Error logging in');
     }
   }
+  async verifyAccount(userId: string, res: Response) {
+    try {
+      await this.prisma.user.update({
+        where: { id: userId },
+        data: {
+          verified: true,
+        },
+      });
+      return this.resHandler.requestSuccessful({
+        res,
+        message: 'Account verification successful.',
+      });
+    } catch (err) {
+      this.resHandler.serverError(res, 'Error verifying account');
+    }
+  }
 }
