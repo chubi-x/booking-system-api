@@ -6,6 +6,7 @@ import {
   Patch,
   Body,
   Put,
+  Delete,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { GetUser } from '../decorators';
@@ -48,8 +49,9 @@ export class UserController {
   ) {
     return await this.userService.updateUserCreditCardInfo(userId, dto, res);
   }
-  // verify account (PATCH)
-  // change email (PATCH)
-  // reset password (PATCH)
+  @Delete('/delete')
+  async deleteUser(@GetUser() userId: string, @Res() res: Response) {
+    return await this.userService.deleteUser(userId, res);
+  }
   // delete user (DELETE)
 }

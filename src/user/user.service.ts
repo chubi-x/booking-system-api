@@ -90,4 +90,21 @@ export class UserService {
       );
     }
   }
+  async deleteUser(userId: string, res: Response) {
+    try {
+      // first delete preferences
+      await this.prisma.preferences.delete({ where: { userId } });
+      // then delete credit card
+      await this.prisma.creditCardDetails.delete({ where: { userId } });
+      // then delete user
+      await this.prisma.user.delete({ where: { id: userId } });
+
+      return this.resHandler.requestSuccessful({
+        res,
+        message: 'User deleted successfully',
+      });
+    } catch (err) {
+      return this.resHandler.serverError(res, 'Error deleting user');
+    }
+  }
 }
