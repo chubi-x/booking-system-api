@@ -52,10 +52,10 @@ model Preferences {
 }
 
 model CreditCardDetails {
-  id         String   @id @default(uuid())
-  number     Int
-  cvv        Int
-  expiryDate DateTime
+  id         String    @id @default(uuid())
+  number     Int?
+  cvv        Int?
+  expiryDate DateTime? @db.Date
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
