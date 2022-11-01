@@ -11,7 +11,13 @@ import { Request, Response } from 'express';
 import { GetUser } from '../decorators';
 import { AuthGuard } from '../guards';
 import { AuthService } from './auth.service';
-import { LoginDto, SignupDto, UpdateEmailDto } from './dto';
+import {
+  checkOldPasswordDto,
+  LoginDto,
+  ResetPasswordDto,
+  SignupDto,
+  UpdateEmailDto,
+} from './dto';
 
 @Controller('auth')
 export class AuthController {
@@ -44,6 +50,25 @@ export class AuthController {
   ) {
     return await this.authService.updateEmail(dto, userId, res);
   }
-  // change email (PATCH)
-  // reset password (PATCH)
+
+  // Routes to reset password
+  @UseGuards(AuthGuard)
+  @Patch('/check-old-password')
+  async checkOldPassword(
+    @Body() dto: checkOldPasswordDto,
+    @GetUser() userId: string,
+    @Res() res: Response,
+  ) {
+    return await this.authService.checkOldPassword(dto, userId, res);
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch('/reset-password')
+  async resetPassword(
+    @Body() dto: ResetPasswordDto,
+    @GetUser() userId: string,
+    @Res() res: Response,
+  ) {
+    return await this.authService.resetPassword(dto, userId, res);
+  }
 }
