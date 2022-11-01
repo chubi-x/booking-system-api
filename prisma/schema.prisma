@@ -24,7 +24,7 @@ model User {
   role           Role               @default(USER)
   email          String             @unique
   password       String
-  phoneNumber    Int?
+  phoneNumber    String?
   dateOfBirth    DateTime?
   verified       Boolean            @default(false)
   creditCard     CreditCardDetails? //ONE-TO-ONE
