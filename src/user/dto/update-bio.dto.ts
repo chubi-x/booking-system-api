@@ -25,7 +25,7 @@ export class UpdateBioDto {
 
   @IsPhoneNumber()
   @IsOptional()
-  phoneNumber?: number;
+  phoneNumber?: string;
 
   @IsString()
   @IsOptional()
