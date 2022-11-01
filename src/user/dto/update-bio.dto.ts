@@ -4,7 +4,14 @@ import {
   IsUrl,
   IsDate,
   IsPhoneNumber,
+  IsEnum,
 } from 'class-validator';
+
+enum Gender {
+  Male = 'MALE',
+  Female = 'FEMALE',
+}
+
 export class UpdateBioDto {
   @IsString()
   @IsOptional()
@@ -27,9 +34,9 @@ export class UpdateBioDto {
   @IsOptional()
   phoneNumber?: string;
 
-  @IsString()
+  @IsEnum(Gender)
   @IsOptional()
-  gender?: string;
+  gender?: Gender;
 
   @IsString()
   @IsOptional()
