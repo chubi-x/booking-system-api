@@ -1,6 +1,6 @@
 import * as argon from 'argon2';
 import { Injectable } from '@nestjs/common';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { PrismaService } from '../database/database.service';
 import { HelpersService } from '../helpers/helpers.service';
 import { LoginDto, SignupDto } from './dto';
@@ -42,7 +42,7 @@ export class AuthService {
       return this.resHandler.serverError(res, 'Error creating user');
     }
   }
-  async login(dto: LoginDto, res: Response, session: Record<string, any>) {
+  async login(dto: LoginDto, res: Response, req: Request) {
     try {
       const user = await this.prisma.user.findUnique({
         where: {
@@ -57,7 +57,7 @@ export class AuthService {
         return this.resHandler.clientError(res, 'Incorrect password', 400);
       }
       // save user session
-      session.userId = user.id;
+      req.session.userId = user.id;
       return this.resHandler.requestSuccessful({
         res,
         message: 'Login successful',
