@@ -35,6 +35,8 @@ export class AuthService {
         await this.prisma.preferences.create({
           data: {
             userId: user.id,
+            currency: 'USD',
+            language: 'English',
           },
         });
         // create credit card
