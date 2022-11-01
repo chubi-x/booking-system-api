@@ -19,7 +19,7 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Get('')
+  @Get('/me')
   async getUser(@GetUser() userId: string, @Res() res: Response) {
     return await this.userService.getUser(userId, res);
   }
@@ -53,5 +53,4 @@ export class UserController {
   async deleteUser(@GetUser() userId: string, @Res() res: Response) {
     return await this.userService.deleteUser(userId, res);
   }
-  // delete user (DELETE)
 }
