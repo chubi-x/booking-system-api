@@ -18,7 +18,7 @@ model User {
   createdAt      DateTime           @default(now())
   firstName      String
   lastName       String
-  gender         String?
+  gender         Gender?
   nationality    String?
   address        String?
   role           Role               @default(USER)
@@ -30,6 +30,11 @@ model User {
   creditCard     CreditCardDetails? //ONE-TO-ONE
   preferences    Preferences? //ONE-TO-ONE
   bookings       Booking[] //ONE-TO-MANY
+}
+
+enum Gender {
+  MALE
+  FEMALE
 }
 
 enum Role {
