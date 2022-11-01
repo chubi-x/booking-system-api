@@ -34,7 +34,7 @@ export class UpdateBioDto {
   @IsOptional()
   phoneNumber?: string;
 
-  @IsEnum(Gender)
+  @IsEnum(Gender, { message: 'Gender must be MALE or FEMALE' })
   @IsOptional()
   gender?: Gender;
 
