@@ -6,7 +6,7 @@ import {
   IsPhoneNumber,
   IsEnum,
 } from 'class-validator';
-
+import { Type } from 'class-transformer';
 enum Gender {
   Male = 'MALE',
   Female = 'FEMALE',
@@ -27,6 +27,7 @@ export class UpdateBioDto {
   profilePicture?: string;
 
   @IsDate()
+  @Type(() => Date)
   @IsOptional()
   dateOfBirth?: Date;
 

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { PrismaService } from '../database/database.service';
 import { HelpersService } from '../helpers/helpers.service';
+import { UpdateBioDto } from './dto';
 
 @Injectable()
 export class UserService {
@@ -10,12 +11,26 @@ export class UserService {
     private resHandler: HelpersService.ResponseHandler,
   ) {}
 
-  async getUser(req: Request, res: Response) {
+  async getUser(userId: string, res: Response) {
     const user = await this.prisma.user.findUnique({
       where: {
-        id: req.session.userId,
+        id: userId,
       },
     });
     return this.resHandler.requestSuccessful({ res, payload: { ...user } });
+  }
+  async updateUserBio(userId: string, dto: UpdateBioDto, res: Response) {
+    try {
+      await this.prisma.user.update({
+        where: { id: userId },
+        data: { ...dto },
+      });
+      return this.resHandler.requestSuccessful({
+        res,
+        message: 'User details updated successfully',
+      });
+    } catch (err) {
+      return this.resHandler.serverError(res, 'Error updating user details');
+    }
   }
 }
