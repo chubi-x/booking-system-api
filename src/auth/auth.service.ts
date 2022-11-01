@@ -22,12 +22,25 @@ export class AuthService {
         },
       });
       if (!user) {
-        await this.prisma.user.create({
+        // create user
+        const user = await this.prisma.user.create({
           data: {
             firstName: dto.firstName,
             lastName: dto.lastName,
             email: dto.email,
             password,
+          },
+        });
+        // create preferences
+        await this.prisma.preferences.create({
+          data: {
+            userId: user.id,
+          },
+        });
+        // create credit card
+        await this.prisma.creditCardDetails.create({
+          data: {
+            userId: user.id,
           },
         });
         return this.resHandler.requestSuccessful({
