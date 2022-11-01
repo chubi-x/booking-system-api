@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { PrismaService } from '../database/database.service';
 import { HelpersService } from '../helpers/helpers.service';
-import { UpdateBioDto, UpdatePreferencesDto } from './dto';
+import { UpdateBioDto, UpdateCreditCardDto, UpdatePreferencesDto } from './dto';
 
 @Injectable()
 export class UserService {
@@ -17,7 +17,21 @@ export class UserService {
         id: userId,
       },
     });
-    return this.resHandler.requestSuccessful({ res, payload: { ...user } });
+    const preferences = await this.prisma.preferences.findUnique({
+      where: { userId },
+    });
+    delete preferences.id;
+    delete preferences.userId;
+
+    const creditCardDetails = await this.prisma.creditCardDetails.findUnique({
+      where: { userId },
+    });
+    delete creditCardDetails.id;
+    delete creditCardDetails.userId;
+    const payload = {
+      user: { ...user, preferences, creditCardDetails },
+    };
+    return this.resHandler.requestSuccessful({ res, payload });
   }
   async updateUserBio(userId: string, dto: UpdateBioDto, res: Response) {
     try {
