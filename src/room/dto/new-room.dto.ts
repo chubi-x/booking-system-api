@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsEnum } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsEnum, IsUrl, IsString } from 'class-validator';
 
 enum RoomKind {
   STANDARD = 'STANDARD',
@@ -16,6 +16,10 @@ export class NewRoomDto {
   @IsNumber()
   @Type(() => Number)
   price: number;
+
+  @IsString()
+  @IsUrl()
+  image: string;
 
   @IsNotEmpty()
   @IsNumber()
