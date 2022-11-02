@@ -18,30 +18,26 @@ export class UserService {
    * @returns ResponseHandler
    */
   async getUser(userId: string, res: Response) {
-    try {
-      const user = await this.prisma.user.findUnique({
-        where: {
-          id: userId,
-        },
-      });
-      const preferences = await this.prisma.preferences.findUnique({
-        where: { userId },
-      });
-      delete preferences.id;
-      delete preferences.userId;
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    const preferences = await this.prisma.preferences.findUnique({
+      where: { userId },
+    });
+    delete preferences.id;
+    delete preferences.userId;
 
-      const creditCardDetails = await this.prisma.creditCardDetails.findUnique({
-        where: { userId },
-      });
-      delete creditCardDetails.id;
-      delete creditCardDetails.userId;
-      const payload = {
-        user: { ...user, preferences, creditCardDetails },
-      };
-      return this.resHandler.requestSuccessful({ res, payload });
-    } catch (err) {
-      return this.resHandler.serverError(res, 'Error getting user details');
-    }
+    const creditCardDetails = await this.prisma.creditCardDetails.findUnique({
+      where: { userId },
+    });
+    delete creditCardDetails.id;
+    delete creditCardDetails.userId;
+    const payload = {
+      user: { ...user, preferences, creditCardDetails },
+    };
+    return this.resHandler.requestSuccessful({ res, payload });
   }
 
   /**
