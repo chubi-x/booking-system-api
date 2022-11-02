@@ -143,6 +143,13 @@ export class HotelService {
       return this.resHandler.serverError(res, 'Error getting all hotels');
     }
   }
+  /**
+   * Update Hotel Details function
+   * @param hotelId Hotel's id
+   * @param dto class containing details to update
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
   async updateHotelDetails(
     hotelId: string,
     dto: UpdateHotelDto,
