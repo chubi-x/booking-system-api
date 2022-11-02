@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { PrismaService } from '../database/database.service';
 import * as argon from 'argon2';
 import { HelpersService } from '../helpers/helpers.service';
-import { LoginHotelDto, RegisterHotelDto } from './dto';
+import { LoginHotelDto, RegisterHotelDto, UpdateHotelDto } from './dto';
 @Injectable()
 export class HotelService {
   constructor(
@@ -141,6 +141,25 @@ export class HotelService {
     } catch (err) {
       console.log(err);
       return this.resHandler.serverError(res, 'Error getting all hotels');
+    }
+  }
+  async updateHotelDetails(
+    hotelId: string,
+    dto: UpdateHotelDto,
+    res: Response,
+  ) {
+    try {
+      await this.prisma.hotel.update({
+        where: { id: hotelId },
+        data: { ...dto },
+      });
+      return this.resHandler.requestSuccessful({
+        res,
+        message: 'Hotel details updated successfully',
+      });
+    } catch (err) {
+      console.log(err);
+      return this.resHandler.serverError(res, 'Error updating hotel details');
     }
   }
 }

@@ -7,8 +7,9 @@ import {
   Res,
   UseGuards,
   Param,
+  Patch,
 } from '@nestjs/common';
-import { LoginHotelDto, RegisterHotelDto } from './dto';
+import { LoginHotelDto, RegisterHotelDto, UpdateHotelDto } from './dto';
 import { HotelService } from './hotel.service';
 import { Request, Response } from 'express';
 import { GetHotel } from '../decorators';
@@ -33,7 +34,6 @@ export class HotelController {
     return this.hotelService.getHotelById(id, res);
   }
 
-  // create hotel
   @Post('/register')
   async registerHotel(
     @Body() dto: RegisterHotelDto,
@@ -52,7 +52,15 @@ export class HotelController {
     return this.hotelService.loginHotel(dto, req, res);
   }
 
-  // update hotel details (name,address,phone,email)
+  @UseGuards(HotelAuthGuard)
+  @Patch('/mine/update')
+  async updateHotelDetails(
+    @GetHotel() hotelId: string,
+    @Body() dto: UpdateHotelDto,
+    @Res() res: Response,
+  ) {
+    return await this.hotelService.updateHotelDetails(hotelId, dto, res);
+  }
   // reset password
 
   // create hotel room
