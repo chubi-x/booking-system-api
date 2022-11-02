@@ -11,6 +11,12 @@ export class HotelService {
     private resHandler: HelpersService.ResponseHandler,
   ) {}
 
+  /**
+   * Register Hotel Function
+   * @param dto class containing registration details
+   * @param res Express Response object
+   * @returns ResponseHandler
+   */
   async registerHotel(dto: RegisterHotelDto, res: Response) {
     try {
       // check if hotel exists
@@ -34,6 +40,13 @@ export class HotelService {
     }
   }
 
+  /**
+   *
+   * @param dto class containing login details
+   * @param req Express Request Object
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
   async loginHotel(dto: LoginHotelDto, req: Request, res: Response) {
     try {
       const hotel = await this.prisma.hotel.findUnique({
@@ -61,6 +74,12 @@ export class HotelService {
     }
   }
 
+  /**
+   * Get Hotel function
+   * @param hotelId Hotel's Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
   async getHotel(hotelId: string, res: Response) {
     try {
       const hotel = await this.prisma.hotel.findUnique({
@@ -78,6 +97,13 @@ export class HotelService {
       return this.resHandler.serverError(res, 'Error getting hotel details');
     }
   }
+
+  /**
+   * Get Hotel by Id function
+   * @param id Hotel id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
   async getHotelById(id: string, res: Response) {
     try {
       const hotel = await this.prisma.hotel.findUnique({ where: { id } });
