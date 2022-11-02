@@ -16,7 +16,6 @@ import { NewRoomDto } from './dto';
 export class RoomController {
   constructor(private roomService: RoomService) {}
 
-  // create hotel room (using logged in hotel )
   @UseGuards(HotelAuthGuard)
   @Post('/new')
   async newRoom(
@@ -24,10 +23,15 @@ export class RoomController {
     @Body() dto: NewRoomDto,
     @Res() res: Response,
   ) {
-    return this.roomService.newRoom(hotelId, dto, res);
+    return await this.roomService.newRoom(hotelId, dto, res);
   }
-  //update room details //PATCH
+  @UseGuards(HotelAuthGuard)
+  @Get('/mine')
+  async getRoomsByHotel(@GetHotel() hotelId: string, @Res() res: Response) {
+    return await this.roomService.getRoomsByHotel(hotelId, res);
+  }
   //  get all rooms by single hotel (using logged in hotel ) GET
+  //update room details //PATCH
   // get all rooms (public) GET
   // delete room (using logged in hotel ) DELETE
 }
