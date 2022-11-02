@@ -120,4 +120,27 @@ export class HotelService {
       return this.resHandler.serverError(res, 'Error retrieving hotel details');
     }
   }
+  /**
+   * Get All Hotels functions
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
+  async getAllHotels(res: Response) {
+    try {
+      const hotels = await this.prisma.hotel.findMany({
+        select: {
+          id: true,
+          name: true,
+          address: true,
+          phone: true,
+          email: true,
+          stars: true,
+        },
+      });
+      return this.resHandler.requestSuccessful({ res, payload: { ...hotels } });
+    } catch (err) {
+      console.log(err);
+      return this.resHandler.serverError(res, 'Error getting all hotels');
+    }
+  }
 }

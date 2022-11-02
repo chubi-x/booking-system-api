@@ -16,6 +16,23 @@ import { HotelAuthGuard } from '../guards';
 @Controller('hotels')
 export class HotelController {
   constructor(private hotelService: HotelService) {}
+
+  @UseGuards(HotelAuthGuard)
+  @Get('/mine')
+  async getHotel(@GetHotel() hotelId: string, @Res() res: Response) {
+    return await this.hotelService.getHotel(hotelId, res);
+  }
+
+  @Get('/all')
+  async getAllHotels(@Res() res: Response) {
+    return await this.hotelService.getAllHotels(res);
+  }
+
+  @Get('/:id')
+  async getHotelById(@Param('id') id: string, @Res() res: Response) {
+    return this.hotelService.getHotelById(id, res);
+  }
+
   // create hotel
   @Post('/register')
   async registerHotel(
@@ -35,17 +52,6 @@ export class HotelController {
     return this.hotelService.loginHotel(dto, req, res);
   }
 
-  @UseGuards(HotelAuthGuard)
-  @Get('/mine')
-  async getHotel(@GetHotel() hotelId: string, @Res() res: Response) {
-    return await this.hotelService.getHotel(hotelId, res);
-  }
-  // get hotel by id
-  @Get('/:id')
-  async getHotelById(@Param('id') id: string, @Res() res: Response) {
-    return this.hotelService.getHotelById(id, res);
-  }
-  // get all hotels
   // update hotel details (name,address,phone,email)
   // reset password
 
