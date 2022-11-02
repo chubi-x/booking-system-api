@@ -240,10 +240,7 @@ export class HotelService {
         message: 'Password changed successfully',
       });
     } catch (err) {
-<<<<<<< HEAD
-=======
       console.log(err);
->>>>>>> 469e1a7c327a8527721329f117d911e98862f0e2
       return this.resHandler.serverError(res, 'Error updating password');
     }
   }
