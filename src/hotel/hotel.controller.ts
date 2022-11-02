@@ -35,11 +35,7 @@ export class HotelController {
   }
 
   @Post('/register')
-  async registerHotel(
-    @Body() dto: RegisterHotelDto,
-    @Req() req: Request,
-    @Res() res: Response,
-  ) {
+  async registerHotel(@Body() dto: RegisterHotelDto, @Res() res: Response) {
     return await this.hotelService.registerHotel(dto, res);
   }
 
