@@ -4,6 +4,7 @@ import { PrismaService } from '../database/database.service';
 import * as argon from 'argon2';
 import { HelpersService } from '../helpers/helpers.service';
 import { LoginHotelDto, RegisterHotelDto, UpdateHotelDto } from './dto';
+import { checkOldPasswordDto, ResetPasswordDto } from '../auth/dto';
 @Injectable()
 export class HotelService {
   constructor(
@@ -61,7 +62,7 @@ export class HotelService {
       if (!passwordMatches) {
         return this.resHandler.clientError(res, 'Incorrect password', 400);
       } else {
-        // save user session
+        // save hotel session
         req.session.hotelId = hotel.id;
         return this.resHandler.requestSuccessful({
           res,
@@ -167,6 +168,79 @@ export class HotelService {
     } catch (err) {
       console.log(err);
       return this.resHandler.serverError(res, 'Error updating hotel details');
+    }
+  }
+
+  /**
+   * Check Old Password Function
+   * @param dto Class containing old password
+   * @param hotelId Hotel's Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
+  async checkOldPassword(
+    dto: checkOldPasswordDto,
+    hotelId: string,
+    res: Response,
+  ) {
+    try {
+      // takes current password
+      const hotel = await this.prisma.hotel.findUnique({
+        where: { id: hotelId },
+      });
+      const passwordMatches = await argon.verify(
+        hotel.password,
+        dto.currentPassword,
+      );
+      if (!passwordMatches) {
+        return this.resHandler.clientError(res, 'Password does not match', 400);
+      } else {
+        return this.resHandler.requestSuccessful({
+          res,
+          message: 'Passwords match',
+          status: 200,
+        });
+      }
+    } catch (err) {
+      return this.resHandler.serverError(res, 'Error checking old password');
+    }
+  }
+  /**
+   * Reset Password Function
+   * @param dto Class containing new password
+   * @param hotelId Hotel's Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
+  async resetPassword(dto: ResetPasswordDto, hotelId: string, res: Response) {
+    try {
+      const hotel = await this.prisma.hotel.findUnique({
+        where: { id: hotelId },
+      });
+      const newPasswordMatchesOld = await argon.verify(
+        hotel.password,
+        dto.newPassword,
+      );
+      if (newPasswordMatchesOld) {
+        return this.resHandler.clientError(
+          res,
+          'New password must not be old password',
+          400,
+        );
+      }
+      const hashedNewPassword = await argon.hash(dto.newPassword);
+      await this.prisma.hotel.update({
+        where: { id: hotelId },
+        data: {
+          password: hashedNewPassword,
+        },
+      });
+      return this.resHandler.requestSuccessful({
+        res,
+        message: 'Password changed successfully',
+      });
+    } catch (err) {
+      return this.resHandler.serverError(res, 'Error updating password');
     }
   }
 }

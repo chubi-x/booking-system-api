@@ -14,6 +14,7 @@ import { HotelService } from './hotel.service';
 import { Request, Response } from 'express';
 import { GetHotel } from '../decorators';
 import { HotelAuthGuard } from '../guards';
+import { checkOldPasswordDto, ResetPasswordDto } from '../auth/dto';
 @Controller('hotels')
 export class HotelController {
   constructor(private hotelService: HotelService) {}
@@ -57,8 +58,26 @@ export class HotelController {
   ) {
     return await this.hotelService.updateHotelDetails(hotelId, dto, res);
   }
-  // reset password
+  // Routes to reset password
+  @UseGuards(HotelAuthGuard)
+  @Patch('/auth/check-old-password')
+  async checkOldPassword(
+    @Body() dto: checkOldPasswordDto,
+    @GetHotel() hotelId: string,
+    @Res() res: Response,
+  ) {
+    return await this.hotelService.checkOldPassword(dto, hotelId, res);
+  }
 
+  @UseGuards(HotelAuthGuard)
+  @Patch('/auth/reset-password')
+  async resetPassword(
+    @Body() dto: ResetPasswordDto,
+    @GetHotel() hotelId: string,
+    @Res() res: Response,
+  ) {
+    return await this.hotelService.resetPassword(dto, hotelId, res);
+  }
   // create hotel room
   // update hotel room
   //  get all rooms by single hotel
