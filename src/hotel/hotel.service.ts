@@ -60,4 +60,22 @@ export class HotelService {
       return this.resHandler.serverError(res, 'Error logging in');
     }
   }
+
+  async getHotel(hotelId: string, res: Response) {
+    try {
+      const hotel = await this.prisma.hotel.findUnique({
+        where: { id: hotelId },
+      });
+      delete hotel.createdAt;
+      delete hotel.password;
+
+      return this.resHandler.requestSuccessful({
+        res,
+        payload: { ...hotel },
+        message: 'Hotel details retrieved successfully',
+      });
+    } catch (err) {
+      return this.resHandler.serverError(res, 'Error getting hotel details');
+    }
+  }
 }

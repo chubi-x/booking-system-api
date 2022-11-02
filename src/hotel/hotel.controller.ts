@@ -34,11 +34,11 @@ export class HotelController {
     return this.hotelService.loginHotel(dto, req, res);
   }
 
-  // @UseGuards(HotelAuthGuard)
-  // @Get('/mine')
-  // async getHotel(@GetHotel() hotelId: string) {
-
-  // }
+  @UseGuards(HotelAuthGuard)
+  @Get('/mine')
+  async getHotel(@GetHotel() hotelId: string, @Res() res: Response) {
+    return await this.hotelService.getHotel(hotelId, res);
+  }
   // get hotel by id
   // get all hotels
   // update hotel details (name,address,phone,email)
