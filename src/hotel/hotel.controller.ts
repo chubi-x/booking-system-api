@@ -6,6 +6,7 @@ import {
   Req,
   Res,
   UseGuards,
+  Param,
 } from '@nestjs/common';
 import { LoginHotelDto, RegisterHotelDto } from './dto';
 import { HotelService } from './hotel.service';
@@ -40,6 +41,10 @@ export class HotelController {
     return await this.hotelService.getHotel(hotelId, res);
   }
   // get hotel by id
+  @Get('/:id')
+  async getHotelById(@Param('id') id: string, @Res() res: Response) {
+    return this.hotelService.getHotelById(id, res);
+  }
   // get all hotels
   // update hotel details (name,address,phone,email)
   // reset password
