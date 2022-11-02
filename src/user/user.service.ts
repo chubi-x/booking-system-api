@@ -24,6 +24,9 @@ export class UserService {
           id: userId,
         },
       });
+      delete user.createdAt;
+      delete user.password;
+
       const preferences = await this.prisma.preferences.findUnique({
         where: { userId },
       });
