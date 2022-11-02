@@ -11,6 +11,12 @@ export class UserService {
     private resHandler: HelpersService.ResponseHandler,
   ) {}
 
+  /**
+   * Get User function
+   * @param userId User's Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
   async getUser(userId: string, res: Response) {
     const user = await this.prisma.user.findUnique({
       where: {
@@ -33,6 +39,14 @@ export class UserService {
     };
     return this.resHandler.requestSuccessful({ res, payload });
   }
+
+  /**
+   * Update User Bio function
+   * @param userId User's Id
+   * @param dto Class containing bio details to be updated
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
   async updateUserBio(userId: string, dto: UpdateBioDto, res: Response) {
     try {
       await this.prisma.user.update({
@@ -47,6 +61,13 @@ export class UserService {
       return this.resHandler.serverError(res, 'Error updating user details');
     }
   }
+  /**
+   * Update User Preferences function
+   * @param userId User's Id
+   * @param dto Class containing preferences to be updated
+   * @param res Express Response Object
+   * @returns Response Handler
+   */
   async updateUserPreferences(
     userId: string,
     dto: UpdatePreferencesDto,
@@ -69,6 +90,13 @@ export class UserService {
       );
     }
   }
+  /**
+   * Update User Credit Card Info Function
+   * @param userId User's Id
+   * @param dto Class containing credit card details
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
   async updateUserCreditCardInfo(
     userId: string,
     dto: UpdateCreditCardDto,
@@ -90,6 +118,12 @@ export class UserService {
       );
     }
   }
+  /**
+   * Delete User function
+   * @param userId User's Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
   async deleteUser(userId: string, res: Response) {
     try {
       // first delete preferences
