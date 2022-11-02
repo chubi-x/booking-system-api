@@ -31,7 +31,7 @@ export class HotelController {
 
   @Get('/:id')
   async getHotelById(@Param('id') id: string, @Res() res: Response) {
-    return this.hotelService.getHotelById(id, res);
+    return await this.hotelService.getHotelById(id, res);
   }
 
   @Post('/register')
@@ -45,7 +45,7 @@ export class HotelController {
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    return this.hotelService.loginHotel(dto, req, res);
+    return await this.hotelService.loginHotel(dto, req, res);
   }
 
   @UseGuards(HotelAuthGuard)
