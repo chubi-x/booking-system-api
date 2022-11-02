@@ -12,7 +12,6 @@ import { DatabaseModule } from './database/database.module';
 import { HelpersModule } from './helpers/helpers.module';
 import { RoomModule } from './room/room.module';
 import { RoomService } from './room/room.service';
-import { RoomController } from './room/room.controller';
 
 @Module({
   imports: [
