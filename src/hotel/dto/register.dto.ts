@@ -3,6 +3,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsNumber,
+  IsPhoneNumber,
   IsString,
   Max,
   Min,
@@ -28,6 +29,7 @@ export class RegisterHotelDto {
 
   @IsString()
   @IsNotEmpty()
+  @IsPhoneNumber()
   phone: string;
 
   @IsNumber()
