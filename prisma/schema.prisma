@@ -66,10 +66,10 @@ model Hotel {
   createdAt DateTime @default(now())
   name      String
   address   String
-  phone     Int
+  phone     String
   email     String   @unique
   password  String
-  rating    Int
+  stars     Int
 
   rooms    Room[] //ONE-TO-MANY between Hotel and Room
   bookings Booking[] //ONE-TO-MANY between Hotel and Booking
