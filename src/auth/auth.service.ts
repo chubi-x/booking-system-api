@@ -11,12 +11,21 @@ import {
   UpdateEmailDto,
 } from './dto';
 @Injectable()
+/**
+ * Authentication Service
+ */
 export class AuthService {
   constructor(
     private prisma: PrismaService,
     private resHandler: HelpersService.ResponseHandler,
   ) {}
 
+  /**
+   * User Sign Up function
+   * @param dto Class containing Signup details
+   * @param res Express Response object
+   * @returns ResponseHandler
+   */
   async signup(dto: SignupDto, res: Response) {
     const password = await argon.hash(dto.password);
     // first check if user exists
@@ -63,6 +72,13 @@ export class AuthService {
       return this.resHandler.serverError(res, 'Error creating user');
     }
   }
+  /**
+   * User Login Function
+   * @param dto Class containing login details
+   * @param res Express Response Object
+   * @param req Express Request Object
+   * @returns ResponseHandler
+   */
   async login(dto: LoginDto, res: Response, req: Request) {
     try {
       const user = await this.prisma.user.findUnique({
@@ -90,6 +106,12 @@ export class AuthService {
       return this.resHandler.serverError(res, 'Error logging in');
     }
   }
+  /**
+   * Verify Account Function
+   * @param userId User's Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
   async verifyAccount(userId: string, res: Response) {
     try {
       await this.prisma.user.update({
@@ -108,6 +130,13 @@ export class AuthService {
     }
   }
 
+  /**
+   * Update Email Function
+   * @param dto Class containing new email
+   * @param userId User's Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
   async updateEmail(dto: UpdateEmailDto, userId: string, res: Response) {
     try {
       await this.prisma.user.update({
@@ -124,7 +153,13 @@ export class AuthService {
       return this.resHandler.serverError(res, 'Error updating Email.');
     }
   }
-  // first check if old password matches the one on file
+  /**
+   * Check Old Password Function
+   * @param dto Class containing old password
+   * @param userId User's Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
   async checkOldPassword(
     dto: checkOldPasswordDto,
     userId: string,
@@ -152,6 +187,13 @@ export class AuthService {
       return this.resHandler.serverError(res, 'Error checking old password');
     }
   }
+  /**
+   * Reset Password Function
+   * @param dto Class containing new password
+   * @param userId User's Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
   async resetPassword(dto: ResetPasswordDto, userId: string, res: Response) {
     try {
       const user = await this.prisma.user.findUnique({
@@ -183,6 +225,12 @@ export class AuthService {
       return this.resHandler.serverError(res, 'Error updating password');
     }
   }
+  /**
+   * Logout Function
+   * @param req Express Request Object
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
   async logout(req: Request, res: Response) {
     try {
       req.session.destroy(() => {
