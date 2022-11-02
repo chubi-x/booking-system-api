@@ -78,6 +78,7 @@ model Hotel {
 model Room {
   id              String   @id() @default(uuid())
   kind            RoomKind
+  image           String
   price           Int
   numberAvailable Int
   hotelId         String
