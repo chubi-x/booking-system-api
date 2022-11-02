@@ -1,7 +1,17 @@
-import { Body, Controller, Post, Req, Res } from '@nestjs/common';
-import { RegisterHotelDto } from './dto';
+import {
+  Body,
+  Get,
+  Controller,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
+import { LoginHotelDto, RegisterHotelDto } from './dto';
 import { HotelService } from './hotel.service';
 import { Request, Response } from 'express';
+import { GetHotel } from '../decorators';
+import { HotelAuthGuard } from '../guards';
 @Controller('hotels')
 export class HotelController {
   constructor(private hotelService: HotelService) {}
@@ -12,8 +22,23 @@ export class HotelController {
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    return await this.hotelService.registerHotel(dto, req, res);
+    return await this.hotelService.registerHotel(dto, res);
   }
+
+  @Post('/login')
+  async loginHotel(
+    @Body() dto: LoginHotelDto,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    return this.hotelService.loginHotel(dto, req, res);
+  }
+
+  // @UseGuards(HotelAuthGuard)
+  // @Get('/mine')
+  // async getHotel(@GetHotel() hotelId: string) {
+
+  // }
   // get hotel by id
   // get all hotels
   // update hotel details (name,address,phone,email)
