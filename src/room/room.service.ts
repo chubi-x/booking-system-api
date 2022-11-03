@@ -69,4 +69,26 @@ export class RoomService {
       return this.resHandler.serverError(res, 'Error fetching all rooms');
     }
   }
+  /**
+   * Get Room by Id Function
+   * @param id Room's Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
+  async getRoomById(id: string, res: Response) {
+    try {
+      const room = await this.prisma.room.findUnique({ where: { id } });
+      if (room) {
+        return this.resHandler.requestSuccessful({
+          res,
+          payload: { ...room },
+          message: 'Room retrieved successfully',
+        });
+      } else {
+        return this.resHandler.clientError(res, 'Room does not exist');
+      }
+    } catch (err) {
+      return this.resHandler.serverError(res, 'Error retrieving hotel');
+    }
+  }
 }

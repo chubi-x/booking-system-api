@@ -6,6 +6,7 @@ import {
   Patch,
   Res,
   UseGuards,
+  Param,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { RoomService } from './room.service';
@@ -29,6 +30,11 @@ export class RoomController {
   @Get('/mine')
   async getRoomsByHotel(@GetHotel() hotelId: string, @Res() res: Response) {
     return await this.roomService.getRoomsByHotel(hotelId, res);
+  }
+
+  @Get('/:id')
+  async getRoomById(@Param('id') id: string, @Res() res: Response) {
+    return await this.roomService.getRoomById(id, res);
   }
 
   @Get('/all')
