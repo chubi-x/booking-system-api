@@ -7,6 +7,7 @@ import {
   Res,
   UseGuards,
   Param,
+  Delete,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { RoomService } from './room.service';
@@ -49,5 +50,10 @@ export class RoomController {
   ) {
     return await this.roomService.updateRoomById(dto, id, res);
   }
-  // delete room (using logged in hotel ) DELETE
+  // delete room by id (using logged in hotel DELETE
+  @UseGuards(HotelAuthGuard)
+  @Delete('/delete/:id')
+  async deleteRoomById(@Param('id') id: string, @Res() res: Response) {
+    return await this.roomService.deleteRoomById(id, res);
+  }
 }

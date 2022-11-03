@@ -113,4 +113,27 @@ export class RoomService {
       return this.resHandler.serverError(res, 'Error updating room details');
     }
   }
+  /**
+   * Delete Room by Id function
+   * @param id Room Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
+  async deleteRoomById(id: string, res: Response) {
+    try {
+      const room = await this.prisma.room.findUnique({ where: { id } });
+      if (room) {
+        await this.prisma.room.delete({ where: { id } });
+        return this.resHandler.requestSuccessful({
+          res,
+          message: 'Room deleted successfully',
+        });
+      } else {
+        return this.resHandler.clientError(res, 'Room does not exist!');
+      }
+    } catch (err) {
+      console.log(err);
+      return this.resHandler.serverError(res, 'Error deleting room');
+    }
+  }
 }
