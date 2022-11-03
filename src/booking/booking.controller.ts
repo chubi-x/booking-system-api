@@ -14,13 +14,11 @@ import { Response } from 'express';
 import { AuthGuard } from '../guards';
 import { GetUser } from '../decorators';
 import { CreateBookingDto } from './dto';
+@UseGuards(AuthGuard)
 @Controller('bookings')
 export class BookingController {
   constructor(private bookingService: BookingService) {}
 
-  // AUTHORIZED USER
-  // create booking (POST)
-  @UseGuards(AuthGuard)
   @Post('/new')
   async createBooking(
     @GetUser() userId: string,
