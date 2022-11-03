@@ -45,7 +45,7 @@ export class RoomService {
       const rooms = await this.prisma.room.findMany({ where: { hotelId } });
       return this.resHandler.requestSuccessful({
         res,
-        payload: { ...rooms },
+        payload: { rooms },
         message: 'Rooms retrieved successfully',
       });
     } catch (err) {
