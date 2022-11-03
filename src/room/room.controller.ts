@@ -30,8 +30,12 @@ export class RoomController {
   async getRoomsByHotel(@GetHotel() hotelId: string, @Res() res: Response) {
     return await this.roomService.getRoomsByHotel(hotelId, res);
   }
-  //  get all rooms by single hotel (using logged in hotel ) GET
+
+  @Get('/all')
+  async getAllRooms(@Res() res: Response) {
+    return await this.roomService.getAllRooms(res);
+  }
+
   //update room details //PATCH
-  // get all rooms (public) GET
   // delete room (using logged in hotel ) DELETE
 }

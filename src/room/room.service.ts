@@ -52,4 +52,21 @@ export class RoomService {
       return this.resHandler.serverError(res, 'Error getting rooms');
     }
   }
+  /**
+   * Get All Rooms Function
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
+  async getAllRooms(res: Response) {
+    try {
+      const payload = await this.prisma.hotel.findMany();
+      return this.resHandler.requestSuccessful({
+        res,
+        payload,
+        message: 'Rooms retrieved successfully',
+      });
+    } catch (err) {
+      return this.resHandler.serverError(res, 'Error fetching all rooms');
+    }
+  }
 }
