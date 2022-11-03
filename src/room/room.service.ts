@@ -101,14 +101,21 @@ export class RoomService {
    */
   async updateRoomById(dto: UpdateRoomDto, id: string, res: Response) {
     try {
-      await this.prisma.room.update({
+      const room = await this.prisma.room.findUnique({
         where: { id },
-        data: { ...dto },
       });
-      return this.resHandler.requestSuccessful({
-        res,
-        message: 'Room details updated successfully',
-      });
+      if (room) {
+        await this.prisma.room.update({
+          where: { id },
+          data: { ...dto },
+        });
+        return this.resHandler.requestSuccessful({
+          res,
+          message: 'Room details updated successfully',
+        });
+      } else {
+        return this.resHandler.serverError(res, 'Room does not exist!');
+      }
     } catch (err) {
       return this.resHandler.serverError(res, 'Error updating room details');
     }
