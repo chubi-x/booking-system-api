@@ -78,9 +78,4 @@ export class HotelController {
   ) {
     return await this.hotelService.resetPassword(dto, hotelId, res);
   }
-  // create hotel room
-  // update hotel room
-  //  get all rooms by single hotel
-  // get all rooms (public)
-  // delete room
 }

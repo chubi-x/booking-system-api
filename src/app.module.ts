@@ -10,6 +10,8 @@ import { BookingService } from './booking/booking.service';
 import { HotelService } from './hotel/hotel.service';
 import { DatabaseModule } from './database/database.module';
 import { HelpersModule } from './helpers/helpers.module';
+import { RoomModule } from './room/room.module';
+import { RoomService } from './room/room.service';
 
 @Module({
   imports: [
@@ -22,7 +24,14 @@ import { HelpersModule } from './helpers/helpers.module';
     HotelModule,
     DatabaseModule,
     HelpersModule,
+    RoomModule,
   ],
-  providers: [AuthService, UserService, BookingService, HotelService],
+  providers: [
+    AuthService,
+    UserService,
+    BookingService,
+    HotelService,
+    RoomService,
+  ],
 })
 export class AppModule {}

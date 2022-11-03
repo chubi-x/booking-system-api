@@ -76,13 +76,22 @@ model Hotel {
 }
 
 model Room {
-  id              String @id() @default(uuid())
-  kind            String
+  id              String   @id() @default(uuid())
+  kind            RoomKind
+  image           String
   price           Int
   numberAvailable Int
   hotelId         String
 
-  hotel Hotel @relation(fields: [hotelId], references: [id])
+  hotel    Hotel     @relation(fields: [hotelId], references: [id])
+  bookings Booking[] //A room can have many bookings
+}
+
+enum RoomKind {
+  STANDARD
+  DELUXE
+  EXECUTIVE
+  PRESIDENTIAL
 }
 
 model Booking {
@@ -95,7 +104,9 @@ model Booking {
   cost          Int
 
   userId  String @unique
+  roomId  String @unique
   hotelId String @unique
   user    User   @relation(fields: [userId], references: [id])
+  room    Room   @relation(fields: [roomId], references: [id])
   hotel   Hotel  @relation(fields: [hotelId], references: [id])
 }
