@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Response } from 'express';
 import { PrismaService } from '../database/database.service';
 import { HelpersService } from '../helpers/helpers.service';
-import { NewRoomDto } from './dto';
+import { NewRoomDto, UpdateRoomDto } from './dto';
 
 @Injectable()
 export class RoomService {
@@ -89,6 +89,28 @@ export class RoomService {
       }
     } catch (err) {
       return this.resHandler.serverError(res, 'Error retrieving hotel');
+    }
+  }
+  /**
+   * Update Room By Id Function
+   * @param dto class updated room details
+   * @param hotelId Hotel's Id
+   * @param id Room Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
+  async updateRoomById(dto: UpdateRoomDto, id: string, res: Response) {
+    try {
+      await this.prisma.room.update({
+        where: { id },
+        data: { ...dto },
+      });
+      return this.resHandler.requestSuccessful({
+        res,
+        message: 'Room details updated successfully',
+      });
+    } catch (err) {
+      return this.resHandler.serverError(res, 'Error updating room details');
     }
   }
 }
