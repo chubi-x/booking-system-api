@@ -24,13 +24,17 @@ export class UserService {
           id: userId,
         },
       });
+
       if (user) {
+            delete user.createdAt;
+      delete user.password;
+      
         const preferences = await this.prisma.preferences.findUnique({
           where: { userId },
         });
         delete preferences.id;
         delete preferences.userId;
-
+   
         const creditCardDetails =
           await this.prisma.creditCardDetails.findUnique({
             where: { userId },
@@ -41,7 +45,8 @@ export class UserService {
           user: { ...user, preferences, creditCardDetails },
         };
         return this.resHandler.requestSuccessful({ res, payload });
-      } else {
+      } 
+      else {
         return this.resHandler.clientError(res, 'This user does not exist!');
       }
     } catch (err) {
