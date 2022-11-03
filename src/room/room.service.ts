@@ -59,7 +59,7 @@ export class RoomService {
    */
   async getAllRooms(res: Response) {
     try {
-      const payload = await this.prisma.hotel.findMany();
+      const payload = await this.prisma.room.findMany();
       return this.resHandler.requestSuccessful({
         res,
         payload,
