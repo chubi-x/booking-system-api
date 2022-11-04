@@ -19,7 +19,7 @@ import { CreateBookingDto, UpdateBookingDto } from './dto';
 export class BookingController {
   constructor(private bookingService: BookingService) {}
 
-  @Get('/:id')
+  @Get('/booking/:id')
   async getBookingById(@Param('id') id: string, @Res() res: Response) {
     return this.bookingService.getBookingById(id, res);
   }
@@ -36,7 +36,7 @@ export class BookingController {
     return await this.bookingService.createBooking(userId, dto, res);
   }
   // update booking (PATCH)
-  @Patch('/update/:bookingId')
+  @Patch('/booking/update/:bookingId')
   async updateBookingById(
     @Param('bookingId') bookingId: string,
     @GetUser() userId: string,
