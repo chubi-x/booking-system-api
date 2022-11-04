@@ -93,7 +93,6 @@ export class AuthService {
       if (!passwordMatches) {
         return this.resHandler.clientError(res, 'Incorrect password', 400);
       } else {
-        console.log(passwordMatches);
         // save user session
         req.session.userId = user.id;
         return this.resHandler.requestSuccessful({
