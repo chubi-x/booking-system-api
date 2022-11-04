@@ -212,7 +212,7 @@ export class HotelService {
           stars: true,
         },
       });
-      return this.resHandler.requestSuccessful({ res, payload: { ...hotels } });
+      return this.resHandler.requestSuccessful({ res, payload: { hotels } });
     } catch (err) {
       console.log(err);
       return this.resHandler.serverError(res, 'Error getting all hotels');
