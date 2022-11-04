@@ -103,9 +103,9 @@ model Booking {
   numberOfRooms Int
   cost          Int
 
-  userId  String @unique
-  roomId  String @unique
-  hotelId String @unique
+  userId  String
+  roomId  String
+  hotelId String
   user    User   @relation(fields: [userId], references: [id])
   room    Room   @relation(fields: [roomId], references: [id])
   hotel   Hotel  @relation(fields: [hotelId], references: [id])
