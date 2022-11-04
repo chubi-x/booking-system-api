@@ -137,4 +137,30 @@ export class BookingService {
       return this.resHandler.serverError(res, 'Error updating booking details');
     }
   }
+
+  /**
+   * Get Booking by Id function
+   * @param id Booking Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
+  async getBookingById(id: string, res: Response) {
+    try {
+      const booking = await this.prisma.booking.findUnique({ where: { id } });
+      if (booking) {
+        delete booking.createdAt;
+        delete booking.updatedAt;
+        delete booking.userId;
+        return this.resHandler.requestSuccessful({
+          res,
+          payload: { ...booking },
+          message: 'Booking retrieved successfully',
+        });
+      } else {
+        return this.resHandler.clientError(res, 'Booking does not exist');
+      }
+    } catch (err) {
+      return this.resHandler.serverError(res, 'Error retrieving booking');
+    }
+  }
 }

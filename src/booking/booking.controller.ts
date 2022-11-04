@@ -42,7 +42,10 @@ export class BookingController {
       res,
     );
   }
-  // get booking by id (GET)
+  @Get('/:id')
+  async getBookingById(@Param('id') id: string, @Res() res: Response) {
+    return this.bookingService.getBookingById(id, res);
+  }
   // Get all bookings by user (GET)
   // delete booking by Id (DELETE)
   //delete all bookings made by user (DELETE)
