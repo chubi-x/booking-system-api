@@ -163,4 +163,47 @@ export class BookingService {
       return this.resHandler.serverError(res, 'Error retrieving booking');
     }
   }
+  /**
+   *
+   * @param userId User Id
+   * @param {Express.Response} res Response Object
+   * @returns ResponseHandler
+   */
+  async getAllBookingsByUser(userId: string, res: Response) {
+    try {
+      const user = await this.prisma.user.findUnique({ where: { id: userId } });
+      if (user) {
+        const bookings = await this.prisma.booking.findMany({
+          where: { userId },
+        });
+        if (bookings) {
+          bookings.forEach((booking) => {
+            delete booking.hotelId;
+            delete booking.roomId;
+            delete booking.createdAt;
+            delete booking.updatedAt;
+            delete booking.userId;
+          });
+
+          return this.resHandler.requestSuccessful({
+            res,
+            payload: bookings,
+            message: 'Bookings retrieved successfully',
+          });
+        } else {
+          return this.resHandler.clientError(
+            res,
+            "You don't have any bookings",
+          );
+        }
+      } else {
+        return this.resHandler.clientError(res, 'User does not exist');
+      }
+    } catch (err) {
+      return this.resHandler.serverError(
+        res,
+        'There was an error getting your bookings',
+      );
+    }
+  }
 }
