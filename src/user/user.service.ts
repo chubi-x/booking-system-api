@@ -26,15 +26,15 @@ export class UserService {
       });
 
       if (user) {
-            delete user.createdAt;
-      delete user.password;
-      
+        delete user.createdAt;
+        delete user.password;
+
         const preferences = await this.prisma.preferences.findUnique({
           where: { userId },
         });
         delete preferences.id;
         delete preferences.userId;
-   
+
         const creditCardDetails =
           await this.prisma.creditCardDetails.findUnique({
             where: { userId },
@@ -45,12 +45,36 @@ export class UserService {
           user: { ...user, preferences, creditCardDetails },
         };
         return this.resHandler.requestSuccessful({ res, payload });
-      } 
-      else {
+      } else {
         return this.resHandler.clientError(res, 'This user does not exist!');
       }
     } catch (err) {
       return this.resHandler.serverError(res, 'Error getting user details');
+    }
+  }
+
+  /**
+   * Get User By Id function
+   * @param id User's Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
+  async getUserById(id: string, res: Response) {
+    try {
+      const user = await this.prisma.user.findUnique({ where: { id } });
+      if (!user) {
+        return this.resHandler.clientError(res, 'User does not exist');
+      } else {
+        delete user.createdAt;
+        delete user.password;
+        return this.resHandler.requestSuccessful({
+          res,
+          payload: { user },
+          message: 'user retrieved successfully',
+        });
+      }
+    } catch (err) {
+      return this.resHandler.serverError(res, 'Error retrieving user');
     }
   }
 
