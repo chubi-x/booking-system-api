@@ -13,7 +13,7 @@ import { BookingService } from './booking.service';
 import { Response } from 'express';
 import { AuthGuard } from '../guards';
 import { GetUser } from '../decorators';
-import { CreateBookingDto } from './dto';
+import { CreateBookingDto, UpdateBookingDto } from './dto';
 @UseGuards(AuthGuard)
 @Controller('bookings')
 export class BookingController {
@@ -28,6 +28,20 @@ export class BookingController {
     return await this.bookingService.createBooking(userId, dto, res);
   }
   // update booking (PATCH)
+  @Patch('/update/:bookingId')
+  async updateBookingById(
+    @Param('bookingId') bookingId: string,
+    @GetUser() userId: string,
+    @Body() dto: UpdateBookingDto,
+    @Res() res: Response,
+  ) {
+    return await this.bookingService.updateBookingById(
+      bookingId,
+      userId,
+      dto,
+      res,
+    );
+  }
   // get booking by id (GET)
   // Get all bookings by user (GET)
   // delete booking by Id (DELETE)
