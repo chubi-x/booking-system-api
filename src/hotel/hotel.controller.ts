@@ -24,6 +24,17 @@ export class HotelController {
   async getHotel(@GetHotel() hotelId: string, @Res() res: Response) {
     return await this.hotelService.getHotel(hotelId, res);
   }
+  @UseGuards(HotelAuthGuard)
+  @Get('/mine/rooms')
+  async getAllHotelRooms(@GetHotel() hotelId: string, @Res() res: Response) {
+    return await this.hotelService.getAllHotelRooms(hotelId, res);
+  }
+
+  @UseGuards(HotelAuthGuard)
+  @Get('/mine/bookings')
+  async getAllHotelBookings(@GetHotel() hotelId: string, @Res() res: Response) {
+    return await this.hotelService.getAllHotelBookings(hotelId, res);
+  }
 
   @Get('/all')
   async getAllHotels(@Res() res: Response) {
