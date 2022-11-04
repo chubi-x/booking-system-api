@@ -19,6 +19,14 @@ import { CreateBookingDto, UpdateBookingDto } from './dto';
 export class BookingController {
   constructor(private bookingService: BookingService) {}
 
+  @Get('/:id')
+  async getBookingById(@Param('id') id: string, @Res() res: Response) {
+    return this.bookingService.getBookingById(id, res);
+  }
+  @Get('')
+  async getAllBookingsByUser(@GetUser() userId: string, @Res() res: Response) {
+    return this.bookingService.getAllBookingsByUser(userId, res);
+  }
   @Post('/new')
   async createBooking(
     @GetUser() userId: string,
@@ -42,14 +50,7 @@ export class BookingController {
       res,
     );
   }
-  @Get('/:id')
-  async getBookingById(@Param('id') id: string, @Res() res: Response) {
-    return this.bookingService.getBookingById(id, res);
-  }
-  @Get('')
-  async getAllBookingsByUser(@GetUser() userId: string, @Res() res: Response) {
-    return this.bookingService.getAllBookingsByUser(userId, res);
-  }
+
   // delete booking by Id (DELETE)
   //delete all bookings made by user (DELETE)
 }
