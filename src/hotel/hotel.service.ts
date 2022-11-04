@@ -122,6 +122,39 @@ export class HotelService {
     }
   }
   /**
+   * Get All Hotel Rooms function
+   * @param hotelId Hotel Id
+   * @param res Express Response Object
+   * @returns ResponseHandler
+   */
+
+  async getAllHotelRooms(hotelId: string, res: Response) {
+    try {
+      const hotel = await this.prisma.hotel.findUnique({
+        where: { id: hotelId },
+      });
+      if (!hotel) {
+        return this.resHandler.clientError(res, 'Hotel does not exist');
+      } else {
+        const rooms = await this.prisma.room.findMany({ where: { hotelId } });
+        if (!rooms) {
+          return this.resHandler.clientError(
+            res,
+            'You do not have any rooms yet.',
+          );
+        } else {
+          return this.resHandler.requestSuccessful({
+            res,
+            payload: { rooms },
+            message: 'Rooms retrieved successfully',
+          });
+        }
+      }
+    } catch (err) {
+      return this.resHandler.serverError(res, 'Error retrieving hotel rooms');
+    }
+  }
+  /**
    * Get All Hotels functions
    * @param res Express Response Object
    * @returns ResponseHandler
