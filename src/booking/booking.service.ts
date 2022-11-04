@@ -164,7 +164,7 @@ export class BookingService {
     }
   }
   /**
-   *
+   * Get all Bookings by User Function
    * @param userId User Id
    * @param {Express.Response} res Response Object
    * @returns ResponseHandler
@@ -204,6 +204,67 @@ export class BookingService {
         res,
         'There was an error getting your bookings',
       );
+    }
+  }
+
+  /**
+   *
+   * @param id Booking Id
+   * @param {Express.Response} res Response Object
+   * @returns ResponseHandler
+
+   */
+  async deleteBookingById(id: string, res: Response) {
+    try {
+      const booking = await this.prisma.booking.findUnique({ where: { id } });
+      if (booking) {
+        await this.prisma.booking.delete({ where: { id } });
+        return this.resHandler.requestSuccessful({
+          res,
+          message: 'Booking deleted successfully',
+        });
+      } else {
+        return this.resHandler.clientError(res, 'Booking does not exist');
+      }
+    } catch (err) {
+      return this.resHandler.serverError(
+        res,
+        'There was an error deleting this booking',
+      );
+    }
+  }
+
+  /**
+   * Delete All Bookings Function
+   * @param userId: user's Id
+   * @param res Express Response Object
+   */
+  async deleteAllBookings(userId: string, res: Response) {
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { id: userId },
+      });
+      if (!user) {
+        return this.resHandler.clientError(res, 'User does not exist');
+      } else {
+        const bookings = await this.prisma.booking.findMany({
+          where: { userId },
+        });
+        if (!bookings) {
+          return this.resHandler.clientError(
+            res,
+            "You don't have any bookings",
+          );
+        } else {
+          await this.prisma.booking.deleteMany({ where: { userId } });
+          return this.resHandler.requestSuccessful({
+            res,
+            message: 'Bookings deleted successfully',
+          });
+        }
+      }
+    } catch (err) {
+      return this.resHandler.serverError(res, 'Error deleting all bookings');
     }
   }
 }

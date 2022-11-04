@@ -50,7 +50,14 @@ export class BookingController {
       res,
     );
   }
+  @Delete('/booking/delete/:id')
+  async deleteBookingById(@Param('id') id: string, @Res() res: Response) {
+    return await this.bookingService.deleteBookingById(id, res);
+  }
+  @Delete('/delete/all')
+  async deleteAllBookings(@GetUser() userId: string, @Res() res: Response) {
+    return await this.bookingService.deleteAllBookings(userId, res);
+  }
 
-  // delete booking by Id (DELETE)
   //delete all bookings made by user (DELETE)
 }
