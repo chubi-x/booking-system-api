@@ -31,7 +31,7 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
-  @Patch('/update/bio')
+  @Patch('/me/update/bio')
   async updateUserBio(
     @GetUser() userId: string,
     @Body() dto: UpdateBioDto,
@@ -41,7 +41,7 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
-  @Put('/update/preferences')
+  @Put('/me/update/preferences')
   async updatePreferences(
     @GetUser() userId: string,
     @Body() dto: UpdatePreferencesDto,
@@ -51,7 +51,7 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
-  @Put('/update/credit-card-details')
+  @Put('/me/update/credit-card-details')
   async updateCreditCard(
     @GetUser() userId: string,
     @Body() dto: UpdateCreditCardDto,
@@ -61,7 +61,7 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
-  @Delete('/delete')
+  @Delete('/me/delete')
   async deleteUser(@GetUser() userId: string, @Res() res: Response) {
     return await this.userService.deleteUser(userId, res);
   }
