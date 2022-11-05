@@ -65,8 +65,20 @@ export class UserService {
       if (!user) {
         return this.resHandler.clientError(res, 'User does not exist');
       } else {
-        delete user.createdAt;
-        delete user.password;
+        // delete sensitive info
+        const propertiesToBeDeleted = [
+          'createdAt',
+          'password',
+          'id',
+          'dateOfBirth',
+          'verified',
+          'address',
+          'nationality',
+          'phoneNumber',
+          'role',
+        ];
+        propertiesToBeDeleted.forEach((prop) => delete user[prop]);
+
         return this.resHandler.requestSuccessful({
           res,
           payload: { user },
