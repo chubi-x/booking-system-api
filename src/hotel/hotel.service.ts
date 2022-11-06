@@ -173,6 +173,14 @@ export class HotelService {
       } else {
         const bookings = await this.prisma.booking.findMany({
           where: { hotelId },
+          select: {
+            checkInDate: true,
+            checkOutDate: true,
+            id: true,
+            numberOfRooms: true,
+            cost: true,
+            roomId: true,
+          },
         });
         if (!bookings) {
           return this.resHandler.clientError(
