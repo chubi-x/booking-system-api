@@ -178,7 +178,7 @@ export class BookingService {
         const bookings = await this.prisma.booking.findMany({
           where: { userId },
         });
-        if (bookings) {
+        if (bookings.length > 0) {
           bookings.forEach((booking) => {
             delete booking.hotelId;
             delete booking.roomId;
