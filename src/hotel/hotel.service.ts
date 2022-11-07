@@ -245,14 +245,21 @@ export class HotelService {
     res: Response,
   ) {
     try {
-      await this.prisma.hotel.update({
+      const hotel = await this.prisma.hotel.findUnique({
         where: { id: hotelId },
-        data: { ...dto },
       });
-      return this.resHandler.requestSuccessful({
-        res,
-        message: 'Hotel details updated successfully',
-      });
+      if (!hotel) {
+        return this.resHandler.clientError(res, 'Hotel does not exist');
+      } else {
+        await this.prisma.hotel.update({
+          where: { id: hotelId },
+          data: { ...dto },
+        });
+        return this.resHandler.requestSuccessful({
+          res,
+          message: 'Hotel details updated successfully',
+        });
+      }
     } catch (err) {
       console.log(err);
       return this.resHandler.serverError(res, 'Error updating hotel details');
