@@ -185,7 +185,7 @@ export class UserService {
       } else {
         return this.resHandler.clientError(
           res,
-          'There are no credit card details associated with this uesr',
+          'There are no credit card details associated with this user',
         );
       }
     } catch (err) {
