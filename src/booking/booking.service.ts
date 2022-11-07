@@ -172,7 +172,9 @@ export class BookingService {
   async getAllBookingsByUser(userId: string, res: Response) {
     try {
       const user = await this.prisma.user.findUnique({ where: { id: userId } });
-      if (user) {
+      if (!user) {
+        return this.resHandler.clientError(res, 'User does not exist');
+      } else {
         const bookings = await this.prisma.booking.findMany({
           where: { userId },
         });
@@ -196,8 +198,6 @@ export class BookingService {
             "You don't have any bookings",
           );
         }
-      } else {
-        return this.resHandler.clientError(res, 'User does not exist');
       }
     } catch (err) {
       return this.resHandler.serverError(
