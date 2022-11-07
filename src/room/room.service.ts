@@ -43,11 +43,15 @@ export class RoomService {
   async getRoomsByHotel(hotelId: string, res: Response) {
     try {
       const rooms = await this.prisma.room.findMany({ where: { hotelId } });
-      return this.resHandler.requestSuccessful({
-        res,
-        payload: { rooms },
-        message: 'Rooms retrieved successfully',
-      });
+      if (rooms.length < 0) {
+        return this.resHandler.clientError(res, "You don't have any rooms.");
+      } else {
+        return this.resHandler.requestSuccessful({
+          res,
+          payload: { rooms },
+          message: 'Rooms retrieved successfully',
+        });
+      }
     } catch (err) {
       return this.resHandler.serverError(res, 'Error getting rooms');
     }
@@ -78,14 +82,14 @@ export class RoomService {
   async getRoomById(id: string, res: Response) {
     try {
       const room = await this.prisma.room.findUnique({ where: { id } });
-      if (room) {
+      if (!room) {
+        return this.resHandler.clientError(res, 'Room does not exist');
+      } else {
         return this.resHandler.requestSuccessful({
           res,
           payload: { ...room },
           message: 'Room retrieved successfully',
         });
-      } else {
-        return this.resHandler.clientError(res, 'Room does not exist');
       }
     } catch (err) {
       return this.resHandler.serverError(res, 'Error retrieving hotel');
