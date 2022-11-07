@@ -138,6 +138,13 @@ export class AuthService {
    */
   async updateEmail(dto: UpdateEmailDto, userId: string, res: Response) {
     try {
+      const user = await this.prisma.user.findUnique({ where: { id: userId } });
+      if (user.email === dto.email) {
+        return this.resHandler.clientError(
+          res,
+          'New email cannot be old email',
+        );
+      }
       await this.prisma.user.update({
         where: { id: userId },
         data: { email: dto.email },
