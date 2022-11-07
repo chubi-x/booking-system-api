@@ -217,14 +217,14 @@ export class BookingService {
   async deleteBookingById(id: string, res: Response) {
     try {
       const booking = await this.prisma.booking.findUnique({ where: { id } });
-      if (booking) {
+      if (!booking) {
+        return this.resHandler.clientError(res, 'Booking does not exist');
+      } else {
         await this.prisma.booking.delete({ where: { id } });
         return this.resHandler.requestSuccessful({
           res,
           message: 'Booking deleted successfully',
         });
-      } else {
-        return this.resHandler.clientError(res, 'Booking does not exist');
       }
     } catch (err) {
       return this.resHandler.serverError(
