@@ -92,7 +92,7 @@ export class RoomService {
         });
       }
     } catch (err) {
-      return this.resHandler.serverError(res, 'Error retrieving hotel');
+      return this.resHandler.serverError(res, 'Error retrieving room');
     }
   }
   /**
