@@ -188,10 +188,10 @@ export class HotelService {
             roomId: true,
           },
         });
-        if (!bookings) {
+        if (bookings.length < 1) {
           return this.resHandler.clientError(
             res,
-            'You do not have any rooms yet.',
+            'You do not have any bookings yet.',
           );
         } else {
           return this.resHandler.requestSuccessful({
