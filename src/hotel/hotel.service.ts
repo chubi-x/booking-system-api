@@ -113,6 +113,9 @@ export class HotelService {
       const hotel = await this.prisma.hotel.findUnique({ where: { id } });
       delete hotel.password;
       delete hotel.createdAt;
+      if (!hotel) {
+        return this.resHandler.clientError(res, 'Hotel account does not exist');
+      }
 
       return this.resHandler.requestSuccessful({
         res,
