@@ -26,7 +26,9 @@ export class BookingService {
       const room = await this.prisma.room.findUnique({
         where: { id: dto.roomId },
       });
-      if (user && room) {
+      if (!user && room) {
+        return this.resHandler.clientError(res, 'User or room does not exist.');
+      } else {
         if (dto.numberOfRooms < room.numberAvailable) {
           // create booking
           await this.prisma.booking.create({
@@ -54,8 +56,6 @@ export class BookingService {
             'The number of available rooms is less than your desired booking',
           );
         }
-      } else {
-        return this.resHandler.clientError(res, 'User or room does not exist.');
       }
     } catch (err) {
       console.log(err);
