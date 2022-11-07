@@ -86,14 +86,17 @@ export class HotelService {
       const hotel = await this.prisma.hotel.findUnique({
         where: { id: hotelId },
       });
-      delete hotel.createdAt;
-      delete hotel.password;
-
-      return this.resHandler.requestSuccessful({
-        res,
-        payload: { ...hotel },
-        message: 'Hotel details retrieved successfully',
-      });
+      if (!hotel) {
+        return this.resHandler.clientError(res, 'Hotel account does not exist');
+      } else {
+        delete hotel.createdAt;
+        delete hotel.password;
+        return this.resHandler.requestSuccessful({
+          res,
+          payload: { ...hotel },
+          message: 'Hotel details retrieved successfully',
+        });
+      }
     } catch (err) {
       return this.resHandler.serverError(res, 'Error getting hotel details');
     }
