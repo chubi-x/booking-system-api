@@ -26,7 +26,7 @@ export class HotelService {
       });
       if (!hotel) {
         const password = await argon.hash(dto.password);
-        const hotel = await this.prisma.hotel.create({
+        await this.prisma.hotel.create({
           data: { ...dto, password },
         });
         return this.resHandler.requestSuccessful({
