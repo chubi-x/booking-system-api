@@ -250,7 +250,7 @@ export class BookingService {
         const bookings = await this.prisma.booking.findMany({
           where: { userId },
         });
-        if (!bookings) {
+        if (bookings.length < 1) {
           return this.resHandler.clientError(
             res,
             "You don't have any bookings",
