@@ -87,7 +87,9 @@ export class BookingService {
       // if user is changing number of rooms check if its less than existing number of rooms in the booking.
       // If it is, update room with the difference. if its not update subtract difference from number of available rooms
 
-      if (booking) {
+      if (!booking) {
+        return this.resHandler.clientError(res, 'Booking does not exist');
+      } else {
         if (dto.numberOfRooms && dto.numberOfRooms <= booking.numberOfRooms) {
           await this.prisma.room.update({
             where: { id: room.id },
@@ -129,8 +131,6 @@ export class BookingService {
           res,
           message: 'Booking updated successfully',
         });
-      } else {
-        return this.resHandler.clientError(res, 'Booking does not exist');
       }
     } catch (err) {
       console.log(err);
