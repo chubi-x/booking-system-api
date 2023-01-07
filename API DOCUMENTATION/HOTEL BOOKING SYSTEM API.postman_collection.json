@@ -1,0 +1,1254 @@
+{
+	"info": {
+		"_postman_id": "d97f8da5-7782-4fa8-b1cc-afaaf79bdc91",
+		"name": "HOTEL BOOKING SYSTEM API",
+		"description": "This is a REST API for a hotel booking system where authenticated customers can create and mange their bookings, and hotel managers can manage their rooms and bookings that are made in each room.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14368781"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "AUTHENTICATION ENDPOINTS",
+					"item": [
+						{
+							"name": "Signup",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "firstName",
+											"value": "john",
+											"type": "text"
+										},
+										{
+											"key": "lastName",
+											"value": "the baptist",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "john1@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/auth/signup",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"auth",
+										"signup"
+									]
+								},
+								"description": "##### This endpoint lets a user signup to the booking service. It expects the following data:\n\n| **PARAMETER** | **DATA TYPE** |\n| --- | --- |\n| firstName | String |\n| lastName | String |\n| email | String |\n| password | String |\n\n##### Below is the response message for a successful request:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"User created successfully\"\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "john1@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/auth/login",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								},
+								"description": "##### This endpoint lets users login to the system with the correct credentials. The table below shows the expected data and their types:\n\n| **PARAMETER** | **DATA TYPE** |\n| --- | --- |\n| email | String |\n| password | String |\n\n##### Below is the response message for a successful request:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Login Successful\"\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "Logout",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/auth/logout",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"auth",
+										"logout"
+									]
+								},
+								"description": "##### This endpoint logs a user out of the system and destroys their session.\n\n##### Below is the response for a successful request:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Logout successful\"\n}\n\n```"
+							},
+							"response": []
+						}
+					],
+					"description": "These are endpoints that let a user signup and login to the booking system."
+				},
+				{
+					"name": "READ ENDPOINTS",
+					"item": [
+						{
+							"name": "get user",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/users/me",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										"me"
+									]
+								},
+								"description": "##### This endpoint returns an authenticated user's profile. Below is an example of a response for a successful request:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Request successful.\",\n    \"data\": {\n        \"user\": {\n            \"id\": \"8fb3ab3d-e6ca-4f1e-9a68-f785dfe4f71e\",\n            \"profilePicture\": \"http://imgur.scs\",\n            \"firstName\": \"john\",\n            \"lastName\": \"the baptist\",\n            \"gender\": \"MALE\",\n            \"nationality\": \"American\",\n            \"address\": \"Wuse 2\",\n            \"role\": \"USER\",\n            \"email\": \"john@gmail.com\",\n            \"phoneNumber\": \"+2348023572432\",\n            \"dateOfBirth\": \"1995-01-01T00:00:00.000Z\",\n            \"verified\": false,\n            \"preferences\": {\n                \"currency\": \"USD\",\n                \"language\": \"English\"\n            },\n            \"creditCardDetails\": {\n                \"number\": \"374245455400126\",\n                \"cvv\": 123,\n                \"expiryDate\": \"2002-12-02T00:00:00.000Z\"\n            }\n        }\n    }\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "get user by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/users/8fb3ab3d-e6ca-4f1e-9a68-f785dfe4f71e",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										"8fb3ab3d-e6ca-4f1e-9a68-f785dfe4f71e"
+									]
+								},
+								"description": "##### This endpoint returns public information about a user. Below is an example response for a successful request:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"user retrieved successfully\",\n    \"data\": {\n        \"user\": {\n            \"profilePicture\": \"http://imgur.scs\",\n            \"firstName\": \"john\",\n            \"lastName\": \"the baptist\",\n            \"gender\": \"MALE\",\n            \"nationality\": \"American\",\n            \"address\": \"Wuse 2\",\n            \"email\": \"john@gmail.com\",\n        }\n    }\n}\n\n```"
+							},
+							"response": []
+						}
+					],
+					"description": "These endpoints return data for and about a user."
+				},
+				{
+					"name": "UPDATE ENDPOINTS",
+					"item": [
+						{
+							"name": "edit user bio",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "phoneNumber",
+											"value": "+2348023572432",
+											"type": "text"
+										},
+										{
+											"key": "gender",
+											"value": "MALE",
+											"type": "text"
+										},
+										{
+											"key": "nationality",
+											"value": "American",
+											"type": "text"
+										},
+										{
+											"key": "dateOfBirth",
+											"value": "1/1/1995",
+											"type": "text"
+										},
+										{
+											"key": "profilePicture",
+											"value": "http://imgur.scs",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "Wuse 2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/users/me/update/bio",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										"me",
+										"update",
+										"bio"
+									]
+								},
+								"description": "##### This endpoint lets a user make changes to their bio. It expects the following data:\n\n| **DATA** | **TYPE** |\n| --- | --- |\n| phoneNumber  <br> | String of a valid phone number, including country code. |\n| gender  <br> | Enum whose values are either MALE or FEMALE |\n| nationality  <br> | String |\n| dateOfBirth  <br> | DateTime |\n| profilePicture  <br> | URL |\n| address | String |\n\n##### Below is the response for a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"User details updated successfully\"\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "update user preferences",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "language",
+											"value": "English",
+											"type": "text"
+										},
+										{
+											"key": "currency",
+											"value": "USD",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/users/me/update/preferences",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										"me",
+										"update",
+										"preferences"
+									]
+								},
+								"description": "##### This endpoint lets a user change their language and currency preferences. It expects the followng data:\n\n| **DATA** | **TYPE** |\n| --- | --- |\n| Language | String |\n| Currency | String |\n\n##### Below is the response for a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Preferences updated successfully\"\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "update credit card info",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "number",
+											"value": "374245455400126",
+											"type": "text"
+										},
+										{
+											"key": "cvv",
+											"value": "123",
+											"type": "text"
+										},
+										{
+											"key": "expiryDate",
+											"value": "12/2/2002",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/users/me/update/credit-card-details",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										"me",
+										"update",
+										"credit-card-details"
+									]
+								},
+								"description": "##### This endpoint lets users update their credit card information. The table below shows the data it expects:\n\n| **DATA** | **TYPE** |\n| --- | --- |\n| number | String containing valid credit card number |\n| cvv | 3 digit number |\n| expiryDate | DateTime |\n\n##### Below is the response for a successful request:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Credit card details updated successfully\"\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "verify account",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/auth/verify-account",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"auth",
+										"verify-account"
+									]
+								},
+								"description": "##### This endpoint lets a user verify their account. The table below shows the data it expects:\n\n| **DATA** | **TYPE** |\n| --- | --- |\n| verified | boolean |\n\n##### Below is the response for a sucessful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Account verification successful.\"\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "check old password",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "currentPassword",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/auth/check-old-password",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"auth",
+										"check-old-password"
+									]
+								},
+								"description": "##### This endpoint checks if the password entered by a user matches their password in the database. The table below shows the data it expects:\n\n| **DATA** | **TYPE** |\n| --- | --- |\n| currentPassword | String |\n\n##### Below is the response to a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Passwords match\"\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "reset password",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "newPassword",
+											"value": "1234",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/auth/reset-password",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"auth",
+										"reset-password"
+									]
+								},
+								"description": "##### This endpoints lets a user reset their password. The table below shows the data it expects:\n\n| **DATA** | **TYPE** |\n| --- | --- |\n| newPassword | String |\n\n##### Below is the response for a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Password changed successfully\"\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "update email",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "chubi@gmail.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/auth/update-email",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"auth",
+										"update-email"
+									]
+								},
+								"description": "##### This endpoint lets a user change their email. The table below shows the data it expects:\n\n| **DATA** | **TYPE** |\n| --- | --- |\n| email | String |\n\n##### Below is the response for a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Email changed successfully\"\n}\n\n```"
+							},
+							"response": []
+						}
+					],
+					"description": "##### These endpoints allow an authenticated and authorized user make changes to their data."
+				},
+				{
+					"name": "DELETE ENDPOINTS",
+					"item": [
+						{
+							"name": "delete user",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/users/me/delete",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"users",
+										"me",
+										"delete"
+									]
+								},
+								"description": "##### This endpoint lets a user delete their account.\n\n##### Below is the response for a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"User deleted successfully\"\n}\n\n```"
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "This section contains routes that an authenticated user can access. Users can signup and login to their accounts, and also update their data however they see fit."
+		},
+		{
+			"name": "BOOKING",
+			"item": [
+				{
+					"name": "CREATE ENDPOINT",
+					"item": [
+						{
+							"name": "create booking",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "checkInDate",
+											"value": "2/1/2026",
+											"type": "text"
+										},
+										{
+											"key": "checkOutDate",
+											"value": "1/2/2027",
+											"type": "text"
+										},
+										{
+											"key": "numberOfRooms",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "roomId",
+											"value": "de5a5142-ca39-42a1-8c28-01bf8834c810",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/bookings/new",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"bookings",
+										"new"
+									]
+								},
+								"description": "##### This endpoint lets users create a booking, The table below shows the data it expects:\n\n| **DATA** | **TYPE** |\n| --- | --- |\n| checkInDate | DateTime |\n| checkOutDate | DateTime |\n| numberOfRooms | Int |\n| roomId | String |"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "READ ENDPOINTS",
+					"item": [
+						{
+							"name": "get booking by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/bookings/booking/2aba505e-fd75-4e3d-9ca9-c18634fbabc2",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"bookings",
+										"booking",
+										"2aba505e-fd75-4e3d-9ca9-c18634fbabc2"
+									]
+								},
+								"description": "##### This endpoint lets a user access information for a single booking, specified by its id.\n\n##### Below is an example response to request from this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Booking retrieved successfully\",\n    \"data\": {\n        \"id\": \"2aba505e-fd75-4e3d-9ca9-c18634fbabc2\",\n        \"checkInDate\": \"2026-02-01T00:00:00.000Z\",\n        \"checkOutDate\": \"2027-01-02T00:00:00.000Z\",\n        \"numberOfRooms\": 2,\n        \"cost\": 10000,\n        \"roomId\": \"8bd1a07e-8827-4fd6-af1a-a8340ad4b458\",\n        \"hotelId\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\"\n    }\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "get all bookings by user",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/bookings",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"bookings"
+									]
+								},
+								"description": "##### This endpoint returns all the bookings a user has made.\n\n##### Below is an example response from a successful request from to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Booking retrieved successfully\",\n    \"data\": {\n        \"id\": \"2aba505e-fd75-4e3d-9ca9-c18634fbabc2\",\n        \"checkInDate\": \"2026-02-01T00:00:00.000Z\",\n        \"checkOutDate\": \"2027-01-02T00:00:00.000Z\",\n        \"numberOfRooms\": 2,\n        \"cost\": 10000,\n        \"roomId\": \"8bd1a07e-8827-4fd6-af1a-a8340ad4b458\",\n        \"hotelId\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\"\n    }\n}\n\n```"
+							},
+							"response": []
+						}
+					],
+					"description": "##### These endpoints expose booking data to authorized users."
+				},
+				{
+					"name": "UPATE ENDPOINTS",
+					"item": [
+						{
+							"name": "update booking by id",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "numberOfRooms",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "checkInDate",
+											"value": "4/12/2022",
+											"type": "text"
+										},
+										{
+											"key": "checkOutDate",
+											"value": "10/12/2022",
+											"type": "text"
+										},
+										{
+											"key": "roomId",
+											"value": "4e2ffd73-a1fa-4ea7-8a40-0f6499de0c7c",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/bookings/booking/update/7f3ea8d2-bdbe-427f-8a72-9b08e1fd2140",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"bookings",
+										"booking",
+										"update",
+										"7f3ea8d2-bdbe-427f-8a72-9b08e1fd2140"
+									]
+								},
+								"description": "##### This endpoint lets a user update a particular booking's details, specified by its id. The table below shows the data it expects:\n\n| **DATA** | **TYPE** |\n| --- | --- |\n| checkInDate | DateTime |\n| checkOutDate | DateTime |\n| numberOfRooms | Int |\n| roomId | String |"
+							},
+							"response": []
+						}
+					],
+					"description": "##### These endpoints let a user update their booking details."
+				},
+				{
+					"name": "DELETE ENDPOINTS",
+					"item": [
+						{
+							"name": "delete booking by id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/bookings/booking/delete/02aa4331-9576-40ec-a008-57357ff88326",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"bookings",
+										"booking",
+										"delete",
+										"02aa4331-9576-40ec-a008-57357ff88326"
+									]
+								},
+								"description": "##### This endpoint lets a user delete a particular booking, specified by its id.\n\n##### Below is the response from a successful request this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Booking deleted successfully\"\n\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "delete all bookings",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/bookings/delete/all",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"bookings",
+										"delete",
+										"all"
+									]
+								},
+								"description": "##### This booking lets a user delete all their bookings.\n\n##### Below is the response from a successful request to this endpoint:\n\n``` json\n{\n  \"success\": true,\n  \"message\": \"Bookings deleted successfully\"\n}\n\n```"
+							},
+							"response": []
+						}
+					],
+					"description": "##### These endpoints lets an authorized user delete their booking details."
+				}
+			],
+			"description": "##### This section outlines all the endpoints that let a user create and manage their hotel bookings."
+		},
+		{
+			"name": "HOTEL",
+			"item": [
+				{
+					"name": "AUTHENTICATION ENDPOINTS",
+					"item": [
+						{
+							"name": "register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "nicon@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "nicon123",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Nicon Luxury",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "Garki",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "+2349024245914",
+											"type": "text"
+										},
+										{
+											"key": "stars",
+											"value": "4",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/register",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"register"
+									]
+								},
+								"description": "##### This endpoint lets a hotel manager signup to the booking service. It expects the following data:\n\n| **PARAMETER** | **DATA TYPE** |\n| --- | --- |\n| email | String containing valid email address |\n| password | String |\n| name | String |\n| phone | String containing valid phone number |\n| address | String |\n| stars | Int |\n\n##### Below is the response message for a successful request:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Hotel registered successfully\"\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "nicon@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "nicon123",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/login",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"login"
+									]
+								},
+								"description": "##### This endpoint lets a hotel manager login to the system with the correct credentials. The table below shows the expected data and their types:\n\n| **PARAMETER** | **DATA TYPE** |\n| --- | --- |\n| email | String |\n| password | String |\n\n##### Below is the response message for a successful request:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Login Successful\"\n}\n\n```"
+							},
+							"response": []
+						}
+					],
+					"description": "##### These are the endpoints for creating and logging in to a hotel account."
+				},
+				{
+					"name": "READ ENDPOINTS",
+					"item": [
+						{
+							"name": "get hotel",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/mine",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"mine"
+									]
+								},
+								"description": "##### This endpoint returns an authenticated hotel's profile. Below is an example of a response for a successful request:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Hotel details retrieved successfully\",\n    \"data\": {\n        \"id\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\",\n        \"name\": \"Nicon Luxury\",\n        \"address\": \"Garki\",\n        \"phone\": \"+2349024245914\",\n        \"email\": \"nicon@gmail.com\",\n        \"stars\": 4\n    }\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "get all hotels",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/all",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"all"
+									]
+								},
+								"description": "##### This a public endpoint that gets all hotels registered with the system.\n\n##### Below is an example response for a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Request successful.\",\n    \"data\": {\n        \"hotels\": [\n            {\n                \"id\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\",\n                \"name\": \"Nicon Luxury\",\n                \"address\": \"Garki\",\n                \"phone\": \"+2349024245914\",\n                \"email\": \"nicon@gmail.com\",\n                \"stars\": 4\n            },\n\n            {\n                \"id\": \"b1e8fb99-da47-401e-9c73-9587ad7fb4f1\",\n                \"name\": \"Sheraton Hotel\",\n                \"address\": \"Wuse\",\n                \"phone\": \"+2348025257235\",\n                \"email\": \"sheraton@gmail.com\",\n                \"stars\": 5\n            },\n            {\n                \"id\": \"b5002c1b-533e-4d79-b718-6a77bea871ea\",\n                \"name\": \"Transcorp Hilton\",\n                \"address\": \"Maitama\",\n                \"phone\": \"+2348025257235\",\n                \"email\": \"transcorop@gmail.com\",\n                \"stars\": 5\n            }\n        ]\n    }\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "get hotel by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/2dce1319-a4de-4d8a-9525-9bf801ac1990",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"2dce1319-a4de-4d8a-9525-9bf801ac1990"
+									]
+								},
+								"description": "##### This is a public endpoint that retrieves a hotel's details, specified by it's id.\n\n##### Below is an example response for a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Hotel retrieved successfully\",\n    \"data\": {\n        \"id\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\",\n        \"name\": \"Nicon Luxury\",\n        \"address\": \"Garki\",\n        \"phone\": \"+2349024245914\",\n        \"email\": \"nicon@gmail.com\",\n        \"stars\": 4\n    }\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "get all rooms in a hotel",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/mine/rooms",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"mine",
+										"rooms"
+									]
+								},
+								"description": "##### This endpoint returns all the rooms available in a logged in hotel.\n\n##### Below is an example response for a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Rooms retrieved successfully\",\n    \"data\": {\n        \"rooms\": [\n            {\n                \"id\": \"8bd1a07e-8827-4fd6-af1a-a8340ad4b458\",\n                \"kind\": \"DELUXE\",\n                \"image\": \"https://imgur.deluxe.jpg\",\n                \"price\": 5000,\n                \"numberAvailable\": 10,\n                \"hotelId\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\"\n            },\n            {\n                \"id\": \"730d9754-95a6-4218-a91d-fea3781c0f73\",\n                \"kind\": \"DELUXE\",\n                \"image\": \"https://imgur.deluxe.jpg\",\n                \"price\": 5000,\n                \"numberAvailable\": 10,\n                \"hotelId\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\"\n            },\n            {\n                \"id\": \"3472d0ec-2d0a-4aaf-8301-2f18c5223f3b\",\n                \"kind\": \"STANDARD\",\n                \"image\": \"https://imgur.standard.jpg\",\n                \"price\": 2000,\n                \"numberAvailable\": 4,\n                \"hotelId\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\"\n            },\n            {\n                \"id\": \"3e4bd2d0-53b5-4816-a87a-a51ffd6125ea\",\n                \"kind\": \"EXECUTIVE\",\n                \"image\": \"https://imgur.executive.jpg\",\n                \"price\": 9000,\n                \"numberAvailable\": 6,\n                \"hotelId\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\"\n            }\n        ]\n    }\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "get all bookings in a hotel",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/mine/bookings",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"mine",
+										"bookings"
+									]
+								},
+								"description": "##### This endpoint returns all the bookings available in a logged hotel.\n\n##### Below is an example of a response to a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Bookings retrieved successfully\",\n    \"data\": {\n        \"bookings\": [\n            {\n                \"checkInDate\": \"2026-02-01T00:00:00.000Z\",\n                \"checkOutDate\": \"2027-01-02T00:00:00.000Z\",\n                \"id\": \"2aba505e-fd75-4e3d-9ca9-c18634fbabc2\",\n                \"numberOfRooms\": 2,\n                \"cost\": 10000,\n                \"roomId\": \"8bd1a07e-8827-4fd6-af1a-a8340ad4b458\"\n            },\n            {\n                \"checkInDate\": \"2022-02-01T00:00:00.000Z\",\n                \"checkOutDate\": \"2023-01-02T00:00:00.000Z\",\n                \"id\": \"8951b414-ac5f-458c-bbde-14fd56cb0f38\",\n                \"numberOfRooms\": 2,\n                \"cost\": 10000,\n                \"roomId\": \"730d9754-95a6-4218-a91d-fea3781c0f73\"\n            },\n            {\n                \"checkInDate\": \"2021-02-05T00:00:00.000Z\",\n                \"checkOutDate\": \"2022-01-08T00:00:00.000Z\",\n                \"id\": \"9ecbcb33-69ca-49c4-866f-f3ca06dcb3dd\",\n                \"numberOfRooms\": 2,\n                \"cost\": 10000,\n                \"roomId\": \"730d9754-95a6-4218-a91d-fea3781c0f73\"\n            }\n        ]\n    }\n}\n\n```"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UPDATE ENDPOINTS",
+					"item": [
+						{
+							"name": "update details",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "sheraton kuje",
+											"type": "text"
+										},
+										{
+											"key": "stars",
+											"value": "5",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "+2347023552452",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/mine/update",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"mine",
+										"update"
+									]
+								},
+								"description": "##### This endpoint lets the hotel manger update the hotel's details. The table below shows the data it expects:\n\n| **DATA** | **TYPE** |\n| --- | --- |\n| name | String |\n| phone | String containing a valid phone number, including country cod |\n| address | String |\n| email | String |\n| stars | Int |\n\n##### Below is an example response for a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Hotel details updated successfully\"\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "reset password",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "newPassword",
+											"value": "sheraton123",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/auth/reset-password",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"auth",
+										"reset-password"
+									]
+								},
+								"description": "##### This endpoint lets hotel managers reset the password for their account on the system. The table below shows the data it expects:\n\n| **DATA** | **TYPE** |\n| --- | --- |\n| newPassword | String |\n\n##### Below is the response to a successful request to this endpoint:\n\nStartFragment\n\n``` json\n{\n  \"success\": true,\n  \"message\": \"Password changed successfully\"\n}\n```\n\nEndFragment"
+							},
+							"response": []
+						},
+						{
+							"name": "check old password",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "currentPassword",
+											"value": "sheraton123",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/auth/check-old-password",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"auth",
+										"check-old-password"
+									]
+								},
+								"description": "##### This endpoint checks if the password entered by a hotel matches their password in the database. The table below shows the data it expects:\n\n| **DATA** | **TYPE** |\n| --- | --- |\n| currentPassword | String |\n\n##### Below is the response to a successful request to this endpoint:\n\n``` json\n{\n  \"success\": true,\n  \"message\": \"Passwords match\"\n}\n\n```"
+							},
+							"response": []
+						}
+					],
+					"description": "##### These endpoints allow hotel managers edit details for their hotel accounts."
+				}
+			],
+			"description": "##### This section contains the endpoints for hotel managers to create and manage their accounts on the system."
+		},
+		{
+			"name": "ROOM",
+			"item": [
+				{
+					"name": "CREATE ENDPOINTS",
+					"item": [
+						{
+							"name": "create room",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "kind",
+											"value": "DELUXE",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "5000",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"value": "https://imgur.deluxe.jpg",
+											"type": "text"
+										},
+										{
+											"key": "numberAvailable",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/rooms/new",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"rooms",
+										"new"
+									]
+								},
+								"description": "##### This endpoint lets a manager create a hotel room. The table below shows the data it expects:\n\n| **DATA** | **TYPE** |\n| --- | --- |\n| kind | Enum (STANDARD, DELUXE, EXECUTIVE, PRESIDENTIAL) |\n| price | Int |\n| image | String Url |\n| numberAvailable | Int |\n\n##### Below is the response from a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Room added successfully\"\n}\n\n```"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "READ ENDPOINTS",
+					"item": [
+						{
+							"name": "get rooms by hotel",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/rooms/mine",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"rooms",
+										"mine"
+									]
+								},
+								"description": "##### This endpoints returns all the rooms available for an authorized hotel.\n\n##### Below is an example response to a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Rooms retrieved successfully\",\n    \"data\": {\n        \"rooms\": [\n            {\n                \"id\": \"6a3da410-cb5d-4a95-969d-9fe50614fbc0\",\n                \"kind\": \"DELUXE\",\n                \"image\": \"https://imgur.deluxe.jpg\",\n                \"price\": 5000,\n                \"numberAvailable\": 10,\n                \"hotelId\": \"b1e8fb99-da47-401e-9c73-9587ad7fb4f1\"\n            }\n        ]\n    }\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "get all rooms",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/rooms/all",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"rooms",
+										"all"
+									]
+								},
+								"description": "##### This is a public endpoint that returns all the rooms available in the system.\n\n##### Below is an example response from a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Rooms retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": \"3472d0ec-2d0a-4aaf-8301-2f18c5223f3b\",\n            \"kind\": \"STANDARD\",\n            \"image\": \"https://imgur.standard.jpg\",\n            \"price\": 2000,\n            \"numberAvailable\": 4,\n            \"hotelId\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\"\n        },\n        {\n            \"id\": \"3e4bd2d0-53b5-4816-a87a-a51ffd6125ea\",\n            \"kind\": \"EXECUTIVE\",\n            \"image\": \"https://imgur.executive.jpg\",\n            \"price\": 9000,\n            \"numberAvailable\": 6,\n            \"hotelId\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\"\n        },\n        {\n            \"id\": \"8bd1a07e-8827-4fd6-af1a-a8340ad4b458\",\n            \"kind\": \"DELUXE\",\n            \"image\": \"https://imgur.deluxe.jpg\",\n            \"price\": 5000,\n            \"numberAvailable\": 8,\n            \"hotelId\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\"\n        },\n        {\n            \"id\": \"730d9754-95a6-4218-a91d-fea3781c0f73\",\n            \"kind\": \"DELUXE\",\n            \"image\": \"https://imgur.deluxe.jpg\",\n            \"price\": 5000,\n            \"numberAvailable\": 6,\n            \"hotelId\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\"\n        },\n        {\n            \"id\": \"a14e89ef-8682-46e9-8700-be28058e1ca5\",\n            \"kind\": \"DELUXE\",\n            \"image\": \"https://imgur.deluxe.jpg\",\n            \"price\": 5000,\n            \"numberAvailable\": 10,\n            \"hotelId\": \"da611f1c-da39-4bce-b5c5-dcc417e71f32\"\n        },\n        {\n            \"id\": \"6a3da410-cb5d-4a95-969d-9fe50614fbc0\",\n            \"kind\": \"DELUXE\",\n            \"image\": \"https://imgur.deluxe.jpg\",\n            \"price\": 5000,\n            \"numberAvailable\": 10,\n            \"hotelId\": \"b1e8fb99-da47-401e-9c73-9587ad7fb4f1\"\n        }\n    ]\n}\n\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "get room by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/rooms/6ce2f9bb-705d-4192-a49c-0dd325340c04",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"rooms",
+										"6ce2f9bb-705d-4192-a49c-0dd325340c04"
+									]
+								},
+								"description": "##### This is a public endpoint that returns the information for a room, specified by its id.\n\n##### Below is an example response from a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Room retrieved successfully\",\n    \"data\": {\n        \"id\": \"6a3da410-cb5d-4a95-969d-9fe50614fbc0\",\n        \"kind\": \"DELUXE\",\n        \"image\": \"https://imgur.deluxe.jpg\",\n        \"price\": 5000,\n        \"numberAvailable\": 10,\n        \"hotelId\": \"b1e8fb99-da47-401e-9c73-9587ad7fb4f1\"\n    }\n}\n\n```"
+							},
+							"response": []
+						}
+					],
+					"description": "##### These endpoints expose hotel room data."
+				},
+				{
+					"name": "UPDATE ENDPOINTS",
+					"item": [
+						{
+							"name": "update room by id",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "price",
+											"value": "5000",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/rooms/update/6ce2f9bb-705d-4192-a49c-0dd325340c04",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"rooms",
+										"update",
+										"6ce2f9bb-705d-4192-a49c-0dd325340c04"
+									]
+								},
+								"description": "##### Below is the response from a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Room details updated successfully\"\n}\n\n```"
+							},
+							"response": []
+						}
+					],
+					"description": "##### These endpoints let an authorized hotel manager edit a room's details."
+				},
+				{
+					"name": "DELETE ENDPOINTS",
+					"item": [
+						{
+							"name": "delete room by id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://booking-system-api-f.herokuapp.com/hotels/rooms/delete/6ce2f9bb-705d-4192-a49c-0dd325340c04",
+									"protocol": "https",
+									"host": [
+										"booking-system-api-f",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"hotels",
+										"rooms",
+										"delete",
+										"6ce2f9bb-705d-4192-a49c-0dd325340c04"
+									]
+								},
+								"description": "##### Below is the response from a successful request to this endpoint:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Room deleted successfully\"\n}\n\n```"
+							},
+							"response": []
+						}
+					],
+					"description": "##### This endpoint lets an authorized hotel manager delete a room."
+				}
+			],
+			"description": "##### These endpoints let authorized hotel managers create and manage their hotel rooms."
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

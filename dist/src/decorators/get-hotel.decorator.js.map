@@ -1,1 +1,0 @@
-{"version":3,"file":"get-hotel.decorator.js","sourceRoot":"","sources":["../../../src/decorators/get-hotel.decorator.ts"],"names":[],"mappings":";;;AAAA,2CAAwE;AAE3D,QAAA,QAAQ,GAAG,IAAA,6BAAoB,EAC1C,CAAC,IAAU,EAAE,GAAqB,EAAE,EAAE;IACpC,MAAM,GAAG,GAAY,GAAG,CAAC,YAAY,EAAE,CAAC,UAAU,EAAE,CAAC;IACrD,OAAO,GAAG,CAAC,OAAO,CAAC,OAAO,CAAC;AAC7B,CAAC,CACF,CAAC"}
