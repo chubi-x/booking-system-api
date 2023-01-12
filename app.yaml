@@ -1,5 +1,0 @@
-runtime: nodejs16
-
-env_variables:
-  DATABASE_URL: 'postgresql://postgres:Z3DkyN3LC3DMf5EoySFI@containers-us-west-40.railway.app:7133/railway'
-  SESSION_SECRET: '2356787l,m./"4k54hn454tgr5t4'
